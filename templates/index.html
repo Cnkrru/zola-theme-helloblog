@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+
+{% block app %}
+{% set postsSection = get_section(path="posts/_index.md") %}
+{% set posts = postsSection.pages %}
+{% set index = config.extra.index %}
+{% set welcome = index.welcome | default(value=[trans(key="home.welcome")]) %}
+
+<script type="application/json" id="index-config">{
+  "welcome": {{ welcome | json_encode | safe }},
+  "increaseSpeed": {{ index.increase_speed | default(value=60) }},
+  "decreaseSpeed": {{ index.decrease_speed | default(value=40) }},
+  "loopSpeed": {{ index.loop_speed | default(value=1000) }},
+  "particleDistance": {{ index.particle_distance | default(value=180) }}
+}</script>
+
+{% if index.particle_enable | default(value=true) %}
+<canvas class="particle-canvas"></canvas>
+{% endif %}
+
+{% set postsUrl = get_url(path="posts/", lang=lang) %}
+{% if not postsUrl is ending_with(pat="/") %}{% set postsUrl = postsUrl ~ "/" %}{% endif %}
+{% set aboutUrl = get_url(path="about/", lang=lang) %}
+{% if not aboutUrl is ending_with(pat="/") %}{% set aboutUrl = aboutUrl ~ "/" %}{% endif %}
+
+<div class="index-page" id="main" tabindex="-1">
+  <div class="index-head">
+    <div class="logo">
+      <a href="{{ postsUrl }}"><p>{{ index.logo | default(value=config.title) }}</p></a>
+    </div>
+    <nav class="index-nav">
+      {% for item in config.extra.menu %}
+      {% set href = get_url(path=item.path, lang=lang) %}
+      {% if not href is ending_with(pat="/") %}{% set href = href ~ "/" %}{% endif %}
+      {% set active = current_url is starting_with(pat=href) %}
+      <a class="nav-element" href="{{ href }}"{% if active %} aria-current="page"{% endif %}>{{ trans(key=item.key) | default(value=item.name) }}</a>
+      {% endfor %}
+    </nav>
+  </div>
+  <div class="index-body">
+    <div class="welcome">{{ welcome[0] }}</div>
+    <div class="btn-list">
+      <a href="{{ postsUrl }}" class="btn btn-read">{{ trans(key="home.read") }}</a>
+      <a href="{{ aboutUrl }}" class="btn btn-about">{{ trans(key="home.about") }}</a>
+    </div>
+    {% if posts | length > 0 %}
+    <div class="latest-post">
+      <span class="latest-label">{{ trans(key="home.latest") }}</span>
+      <a class="latest-link" href="{{ posts[0].permalink }}">{{ posts[0].title }}</a>
+    </div>
+    {% endif %}
+
+    {# Tera v2 移除 concat 过滤器，改用列表推导 + 展开语法收集热力图日期 #}
+    {% set postDates = [post.date | date(format="%Y-%m-%d") for post in posts] %}
+    {% set updatedDates = [post.updated | date(format="%Y-%m-%d") for post in posts if post.updated] %}
+    {% set_global historyDates = [] %}
+    {% for post in posts %}
+      {% if post.extra?.history %}
+        {% set_global historyDates = [...historyDates, ...[h.date for h in post.extra.history if h.date]] %}
+      {% endif %}
+    {% endfor %}
+    {% set dates = [...postDates, ...updatedDates, ...historyDates] %}
+    {% set years = [d | truncate(length=4, end="") for d in dates] | unique | sort | reverse %}
+    {% set months = trans(key="heatmap.months") | split(pat="|") %}
+    {% set defaultYear = years | first | default(value="") %}
+    {% set defaultMonth = 1 %}
+
+    <div class="glass-card">
+      <div class="heatmap-wrapper" data-year-format="{{ trans(key='heatmap.year') }}">
+        <div class="heatmap-header">
+          <div class="custom-select" data-select="year">
+            <button class="select-trigger" type="button">
+              <span class="select-value">{% if defaultYear %}{{ trans(key='heatmap.year') | replace(from="{{ . }}", to=defaultYear) }}{% else %}--{% endif %}</span>
+              <span class="select-arrow"></span>
+            </button>
+            <ul class="dropdown-menu">
+              {% for y in years %}
+              <li class="dropdown-item{% if y == defaultYear %} active{% endif %}" data-value="{{ y }}">{{ trans(key='heatmap.year') | replace(from="{{ . }}", to=y) }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+
+          <h3 class="heatmap-title">{{ trans(key='heatmap.title') }}</h3>
+
+          <div class="custom-select" data-select="month">
+            <button class="select-trigger" type="button">
+              <span class="select-value">{{ months[0] }}</span>
+              <span class="select-arrow"></span>
+            </button>
+            <ul class="dropdown-menu">
+              {% for name in months %}
+              <li class="dropdown-item{% if loop.index == defaultMonth %} active{% endif %}" data-value="{{ loop.index }}">{{ name }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+
+        <div class="heatmap-content">
+          {% if years | length > 0 %}<div class="heatmap-grid"></div>{% else %}<div class="no-data">{{ trans(key='heatmap.empty') }}</div>{% endif %}
+        </div>
+
+        <div class="heatmap-legend">
+          <span class="legend-text">{{ trans(key='heatmap.less') }}</span>
+          <div class="legend-cells">
+            <div class="legend-cell heatmap-lv0"></div>
+            <div class="legend-cell heatmap-lv1"></div>
+            <div class="legend-cell heatmap-lv2"></div>
+            <div class="legend-cell heatmap-lv3"></div>
+            <div class="legend-cell heatmap-lv4"></div>
+          </div>
+          <span class="legend-text">{{ trans(key='heatmap.more') }}</span>
+        </div>
+      </div>
+      <script type="application/json" id="heatmap-data">{"dates":[{% for d in dates %}{{ d | json_encode | safe }}{% if not loop.last %},{% endif %}{% endfor %}]}</script>
+    </div>
+  </div>
+</div>
+{% endblock app %}

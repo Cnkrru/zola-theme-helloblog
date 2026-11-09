@@ -1,0 +1,34 @@
+{%- component tabs() -%}
+{%- set_global labels_raw = "" -%}
+{%- set_global panels_raw = "" -%}
+{%- set_global cur = "" -%}
+{%- set_global started = false -%}
+{%- for line in body | split(pat="\n") -%}
+{%- set t = line | trim -%}
+{%- if t is starting_with(pat="@tab ") -%}
+{%- if started -%}{%- if panels_raw -%}{%- set_global panels_raw = panels_raw ~ "@@PANEL@@" -%}{%- endif -%}{%- set_global panels_raw = panels_raw ~ cur -%}{%- endif -%}
+{%- if labels_raw -%}{%- set_global labels_raw = labels_raw ~ "@@TAB@@" -%}{%- endif -%}
+{%- set_global labels_raw = labels_raw ~ (t | replace(from="@tab ", to="")) -%}
+{%- set_global cur = "" -%}
+{%- set_global started = true -%}
+{%- elif started -%}
+{%- set_global cur = cur ~ line ~ "\n" -%}
+{%- endif -%}
+{%- endfor -%}
+{%- if started -%}{%- if panels_raw -%}{%- set_global panels_raw = panels_raw ~ "@@PANEL@@" -%}{%- endif -%}{%- set_global panels_raw = panels_raw ~ cur -%}{%- endif -%}
+{%- if started -%}
+{%- set labels = labels_raw | split(pat="@@TAB@@") -%}
+{%- set panels = panels_raw | split(pat="@@PANEL@@") -%}
+{%- set group = "tabs-" ~ (labels | join(sep="-") | slugify) ~ "-" ~ (body | length) -%}
+<div class="tabs">
+{%- for label in labels -%}
+<label class="tabs-tab"><input type="radio" id="{{ group }}-{{ loop.index0 }}" name="{{ group }}"{% if loop.first %} checked{% endif %}>{{ label }}</label>
+<div class="tabs-panel">
+
+{{ panels | nth(n=loop.index0) | safe }}
+
+</div>
+{%- endfor -%}
+</div>
+{%- endif -%}
+{%- endcomponent tabs -%}

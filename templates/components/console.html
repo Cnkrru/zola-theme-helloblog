@@ -1,0 +1,17 @@
+{%- component console() -%}
+{%- set_global rows = "" -%}
+{%- for line in body | split(pat="\n") -%}
+{%- set t = line | trim_end -%}
+{%- if t | trim -%}
+{%- if t is starting_with(pat="$ ") -%}
+{%- set_global rows = rows ~ "<div class=\"terminal-line terminal-cmd\"><span class=\"terminal-prompt\">$</span> " ~ (t | replace(from="$ ", to="") | escape) ~ "</div>" -%}
+{%- else -%}
+{%- set_global rows = rows ~ "<div class=\"terminal-line\">" ~ (t | escape) ~ "</div>" -%}
+{%- endif -%}
+{%- endif -%}
+{%- endfor -%}
+<div class="terminal">
+<div class="terminal-bar"><span class="terminal-dot dot-red"></span><span class="terminal-dot dot-yellow"></span><span class="terminal-dot dot-green"></span><span class="terminal-title">terminal</span></div>
+<div class="terminal-body">{{ rows | safe }}</div>
+</div>
+{%- endcomponent console -%}

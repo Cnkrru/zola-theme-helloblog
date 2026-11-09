@@ -1,0 +1,25 @@
+.ink.light {
+    --g-color:#b23a2e;                      /* 朱砂红 */
+    --g-on-color:#ffffff;                   /* 主色上的文字（朱砂深，压白字） */
+    --g-bg:#efe9db;                         /* 宣纸色 */
+    --glass-r:251;                          /* 玻璃底色 R（= 宣纸亮面，对齐 blog-map） */
+    --glass-g:248;                          /* 玻璃底色 G */
+    --glass-b:239;                          /* 玻璃底色 B */
+    --g-text:#2b2722;                       /* 墨色 */
+    --g-hover: #8f2c22;                     /* 深朱砂 */
+    --g-shadow: rgba(74, 60, 40, 0.14);     /* 墨色阴影 */
+    --g-gradient: linear-gradient(90deg, #b23a2e, #6b6557, #3a5a6a, #5a7a4a, #b23a2e);
+}
+
+.ink.dark {
+    --g-color:#d25043;                      /* 朱砂红 */
+    --g-on-color:#16140f;                   /* 主色上的文字（夜色朱砂偏亮，压墨字） */
+    --g-bg:#16140f;                         /* 宣纸色 */
+    --glass-r:43;                           /* 玻璃底色 R（= 夜墨面，调亮） */
+    --glass-g:40;                           /* 玻璃底色 G */
+    --glass-b:35;                           /* 玻璃底色 B */
+    --g-text:#ece6d8;                       /* 墨色 */
+    --g-hover: #d25043;                     /* 深朱砂 */
+    --g-shadow: rgba(0, 0, 0, 0.45);        /* 墨色阴影 */
+    --g-gradient: linear-gradient(90deg, #b23a2e, #6b6557, #3a5a6a, #5a7a4a, #b23a2e);
+}

@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="{{ lang }}">
+  <head>
+    {% include "partials/head.html" %}
+  </head>
+  <body class="{{ config.extra.color_theme | default(value='sakura') }} dark{% if config.extra.background.enable %} bg-img{% endif %}">
+    <script>
+      // 首屏前恢复已保存的明暗偏好，避免亮暗闪烁
+      const ld = localStorage.getItem('ld')
+      if (ld === 'light' || ld === 'dark') {
+        document.body.classList.remove('light', 'dark')
+        document.body.classList.add(ld)
+      }
+    </script>
+
+    <div id="app">
+      <a class="skip-link" href="#main">{{ trans(key="a11y.skipToContent") }}</a>
+      {% block app %}
+      {% include "partials/header.html" %}
+      <div class="center">
+        {% include "partials/sidebar.html" %}
+        <main class="main" id="main" tabindex="-1">
+          {% block main %}{% endblock main %}
+        </main>
+      </div>
+      {% include "partials/footer.html" %}
+      {% if page is defined and page.section == "posts" %}{% include "partials/pmain/backToTop.html" %}{% endif %}
+      {% endblock app %}
+    </div>
+    {% if page is defined and page.section == "posts" %}{% include "partials/pmain/tocMobile.html" %}{% endif %}
+    {% include "partials/pheader/music.html" %}
+    {# 搜索数据：内联当前语言的文章元信息，供 minisearch 首次聚焦时构建索引 #}
+    {% set searchSection = get_section(path="posts/_index.md", lang=lang) %}
+    <script type="application/json" id="search-data">[{% for p in searchSection.pages %}{"url":{{ p.permalink | json_encode | safe }},"title":{{ p.title | json_encode | safe }},"category":{{ (p.extra?.category or "") | json_encode | safe }},"tags":{{ (p.taxonomies?.tags or []) | json_encode | safe }},"date":{{ p.date | date(format="%Y-%m-%d") | json_encode | safe }}}{% if not loop.last %},{% endif %}{% endfor %}]</script>
+    <script type="application/json" id="i18n-data">{
+      "searchFailed": {{ trans(key="search.failed") | json_encode | safe }},
+      "searchNoResult": {{ trans(key="search.noResult") | json_encode | safe }},
+      "searchCounter": {{ trans(key="search.counter") | json_encode | safe }},
+      "searchCategory": {{ trans(key="search.category") | json_encode | safe }},
+      "musicLoading": {{ trans(key="music.loading") | json_encode | safe }},
+      "musicLoadFailed": {{ trans(key="music.loadFailed") | json_encode | safe }}
+    }</script>
+  </body>
+</html>

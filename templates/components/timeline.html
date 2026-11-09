@@ -1,0 +1,13 @@
+{%- component timeline() -%}
+<div class="timeline">
+{%- for line in body | split(pat="\n") -%}
+{%- set t = line | trim -%}
+{%- if t -%}
+{%- set fields = t | split(pat="|") -%}
+<div class="timeline-item"><span class="timeline-dot"></span><div class="timeline-time">{{ fields | nth(n=0) | trim }}</div>{% if fields | length > 1 %}<div class="timeline-title">{{ fields | nth(n=1) | trim }}</div>{% endif %}
+{%- if fields | length > 2 %}<div class="timeline-desc">{{ fields | nth(n=2) | trim }}</div>{% endif -%}
+</div>
+{%- endif -%}
+{%- endfor -%}
+</div>
+{%- endcomponent timeline -%}

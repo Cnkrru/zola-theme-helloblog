@@ -1,0 +1,22 @@
+{%- component flow() -%}
+{%- set_global total = 0 -%}
+{%- for line in body | split(pat="\n") -%}
+{%- if line | trim -%}{%- set_global total = total + 1 -%}{%- endif -%}
+{%- endfor -%}
+{%- set_global n = 0 -%}
+<div class="flow">
+{%- for line in body | split(pat="\n") -%}
+{%- set t = line | trim -%}
+{%- if t -%}
+{%- set_global n = n + 1 -%}
+{%- set fields = t | split(pat="|") -%}
+<div class="flow-node"><div class="flow-text">{{ fields | nth(n=0) | trim }}</div>
+{%- if fields | length > 1 %}<div class="flow-sub">{{ fields | nth(n=1) | trim }}</div>{% endif -%}
+</div>
+{%- if n < total -%}
+<div class="flow-arrow"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg></div>
+{%- endif -%}
+{%- endif -%}
+{%- endfor -%}
+</div>
+{%- endcomponent flow -%}

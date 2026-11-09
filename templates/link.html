@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block main %}
+{% set links = load_data(path="data/link.json") %}
+{% if lang == "en" %}{% set links = load_data(path="data/link-en.json") %}{% endif %}
+{% set uncategorized = trans(key="link.uncategorized") %}
+
+{% set names = [link.category or uncategorized for link in links] | unique %}
+
+<div class="link-list">
+  <div class="list-area">
+    {% for name in names %}
+    <div class="link-grid{% if loop.first %} grid-on{% endif %}">
+      {% for link in links %}
+      {% set c = link.category | default(value=uncategorized) %}
+      {% if c == name %}
+      <a class="link-card" href="{{ link.url }}" target="_blank" rel="noopener noreferrer">
+        <div class="link-name">{{ link.name }}</div>
+        <div class="link-des">{{ link.description }}</div>
+      </a>
+      {% endif %}
+      {% endfor %}
+    </div>
+    {% endfor %}
+    {% if links | length == 0 %}
+    <div class="link-empty">{{ trans(key="link.empty") }}</div>
+    {% endif %}
+  </div>
+
+  {% if links | length > 0 %}
+  <div class="btn-area">
+    <div class="pager-nav">
+      <button class="page-side" type="button" data-action="prev" disabled>{{ trans(key="link.prev") }}</button>
+      {% for name in names %}
+      <button class="page-num{% if loop.first %} page-on{% endif %}" type="button" data-page="{{ loop.index }}">{{ name }}</button>
+      {% endfor %}
+      <button class="page-side" type="button" data-action="next"{% if names | length <= 1 %} disabled{% endif %}>{{ trans(key="link.next") }}</button>
+      <div class="category-wrap">
+        <button class="page-side category-btn" type="button">{{ trans(key="link.category") }} ▾</button>
+        <div class="dropdown-card">
+          {% for name in names %}
+          <button class="dropdown-item{% if loop.first %} dropdown-on{% endif %}" type="button" data-page="{{ loop.index }}">{{ name }}</button>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    <div class="pager-info">{{ trans(key="link.pageInfo") | replace(from="{{ . }}", to=names | length | str) }} · {{ trans(key="link.currentCategory") | replace(from="{{ . }}", to=names[0]) }}</div>
+  </div>
+  {% endif %}
+</div>
+{% endblock main %}

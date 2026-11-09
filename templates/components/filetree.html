@@ -1,0 +1,38 @@
+{%- component filetree() -%}
+{%- set dir_icon = "<svg viewBox=\"0 0 24 24\" width=\"14\" height=\"14\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z\"/></svg>" -%}
+{%- set file_icon = "<svg viewBox=\"0 0 24 24\" width=\"14\" height=\"14\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z\"/><path d=\"M13 2v7h7\"/></svg>" -%}
+{%- set_global out = "" -%}
+{%- set_global cur = -1 -%}
+{%- for line in body | split(pat="\n") -%}
+{%- set norm = line | replace(from="\t", to="  ") -%}
+{%- set t = norm | trim -%}
+{%- if t -%}
+{%- set indent = (norm | length) - (norm | trim_start | length) -%}
+{%- set level = (indent / 2) | int -%}
+{%- if level > cur -%}
+{%- for i in range(end=level - cur) -%}{%- set_global out = out ~ "<ul>" -%}{%- endfor -%}
+{%- set_global cur = level -%}
+{%- elif level == cur -%}
+{%- set_global out = out ~ "</li>" -%}
+{%- else -%}
+{%- set_global out = out ~ "</li>" -%}
+{%- for i in range(end=cur - level) -%}{%- set_global out = out ~ "</ul></li>" -%}{%- endfor -%}
+{%- set_global cur = level -%}
+{%- endif -%}
+{%- set fields = t | split(pat="|") -%}
+{%- set raw_name = fields | nth(n=0) | trim -%}
+{%- if raw_name is starting_with(pat="- ") -%}{%- set raw_name = raw_name | trim_start(pat="- ") | trim -%}{%- endif -%}
+{%- set note = "" -%}
+{%- if fields | length > 1 -%}{%- set note = fields | nth(n=1) | trim -%}{%- endif -%}
+{%- if raw_name is ending_with(pat="/") -%}
+{%- set label = raw_name | trim_end(pat="/") -%}
+{%- set_global out = out ~ "<li class=\"is-dir\"><span class=\"filetree-icon\">" ~ dir_icon ~ "</span><span class=\"filetree-name\">" ~ (label | escape) ~ "</span>" -%}
+{%- else -%}
+{%- set_global out = out ~ "<li class=\"is-file\"><span class=\"filetree-icon\">" ~ file_icon ~ "</span><span class=\"filetree-name\">" ~ (raw_name | escape) ~ "</span>" -%}
+{%- endif -%}
+{%- if note -%}{%- set_global out = out ~ "<span class=\"filetree-note\">" ~ (note | escape) ~ "</span>" -%}{%- endif -%}
+{%- endif -%}
+{%- endfor -%}
+{%- for i in range(end=cur + 1) -%}{%- set_global out = out ~ "</li></ul>" -%}{%- endfor -%}
+<div class="filetree-box">{{ out | safe }}</div>
+{%- endcomponent filetree -%}

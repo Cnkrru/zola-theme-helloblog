@@ -1,0 +1,613 @@
+/* ====================<首页>==================== */
+
+/* ---------- 粒子画布 ---------- */
+.particle-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ---------- 整页容器 ---------- */
+.index-page {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+}
+
+.index-head {
+  width: 100%;
+  height: 64px;
+
+  position: relative;
+  z-index: 1;
+
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  flex-direction: row;
+
+  padding: var(--space-sm);
+}
+
+.index-body {
+  width: 100%;
+  height: fit-content;
+
+  position: relative;
+  z-index: 1;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+/* ---------- 首页 logo（与页头 logo 同名，用父级限定区分） ---------- */
+.index-head .logo {
+  width: fit-content;
+  height: 100%;
+
+  margin-left: var(--space-md);
+
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.index-head .logo p {
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'PingFang SC', 'Microsoft YaHei',
+    sans-serif;
+  white-space: nowrap;
+  transition: opacity 0.2s ease;
+  color: var(--g-color);
+}
+
+/* ---------- 首页导航（横排 + 下划线动画） ---------- */
+.index-nav {
+  width: 100%;
+  height: fit-content;
+  max-height: 240px;
+
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  flex-direction: row;
+  gap: var(--space-lg);
+
+  padding: var(--space-sm) var(--space-md);
+  margin-bottom: var(--space-xs);
+
+  text-align: center;
+  overflow-y: auto;
+  background: transparent;
+}
+
+.index-nav .nav-element {
+  position: relative;
+  width: fit-content;
+  height: fit-content;
+
+  padding: 6px 0;
+  border-radius: var(--radius-md);
+
+  text-decoration: none;
+  color: var(--g-text);
+  opacity: 0.7;
+  transition: color 0.2s ease;
+}
+
+.index-nav .nav-element::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--g-color);
+  transition: width 0.3s ease;
+}
+
+.index-nav .nav-element:hover {
+  color: var(--g-color);
+  opacity: 1;
+}
+
+.index-nav .nav-element:hover::after {
+  width: 100%;
+}
+
+/* ---------- 打字机 ---------- */
+.welcome {
+  width: fit-content;
+  height: 30vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  color: var(--g-color);
+
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 800;
+  margin: 0;
+  line-height: 1.2;
+}
+
+/* ---------- 按钮组（限定首页，避免与文章页分享按钮同名类互相污染） ---------- */
+.index-body .btn-list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  gap: var(--space-lg);
+}
+
+.index-body .btn {
+  padding: 12px 32px;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 28px;
+  border: none;
+  cursor: pointer;
+  transition:
+    transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.btn-read {
+  background: var(--g-color);
+  color: #fff;
+  box-shadow: 0 4px 16px var(--g-shadow);
+}
+
+.btn-read:hover {
+  box-shadow: 0 8px 24px var(--g-shadow);
+}
+
+.btn-about {
+  background: rgba(var(--glass-r), var(--glass-g), var(--glass-b), 0.3);
+  color: var(--g-text);
+  border: 1px solid color-mix(in srgb, var(--g-text) 10%, transparent);
+  backdrop-filter: blur(8px);
+}
+
+.btn-about:hover {
+  background: rgba(var(--glass-r), var(--glass-g), var(--glass-b), 0.5);
+}
+
+.index-body .btn:hover {
+  transform: translateY(-2px);
+}
+
+.index-body .btn:active {
+  transform: translateY(0) scale(0.97);
+}
+
+/* ---------- 最新文章入口 ---------- */
+.index-body .latest-post {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-sm);
+
+  font-size: 13px;
+  color: color-mix(in srgb, var(--g-text) 55%, transparent);
+}
+
+.latest-link {
+  max-width: 60vw;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  color: var(--g-color);
+  text-decoration: none;
+}
+
+.latest-link:hover {
+  text-decoration: underline;
+}
+
+.glass-card {
+  width: 100%;
+  max-width: 720px;
+  border-radius: var(--radius-xl);
+  padding: 24px;
+  background: rgba(var(--glass-r), var(--glass-g), var(--glass-b), 0.3);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid color-mix(in srgb, var(--g-text) 8%, transparent);
+  display: flex;
+  justify-content: center;
+}
+
+/* ---------- 热力图 ---------- */
+.heatmap-wrapper {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+  position: relative;
+  min-height: 200px;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+}
+
+.no-data {
+  text-align: center;
+  padding: 30px;
+  font-size: 13px;
+  color: var(--g-text);
+  opacity: 0.4;
+}
+
+.heatmap-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap: 12px;
+}
+
+.heatmap-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--g-text);
+  margin: 0;
+  opacity: 0.6;
+}
+
+.custom-select {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.select-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  color: var(--g-text);
+  background: rgba(var(--glass-r), var(--glass-g), var(--glass-b), 0.3);
+  border: 1px solid color-mix(in srgb, var(--g-text) 12%, transparent);
+  backdrop-filter: blur(8px);
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.select-trigger:hover:not(:disabled) {
+  border-color: var(--g-color);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--g-color) 25%, transparent);
+}
+
+.select-trigger.active {
+  border-color: var(--g-color);
+  background: color-mix(in srgb, var(--g-color) 10%, transparent);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--g-color) 30%, transparent);
+}
+
+.select-trigger:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.select-value {
+  line-height: 1;
+}
+
+.select-arrow {
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 5px solid var(--g-text);
+  transition: transform 0.2s ease;
+  opacity: 0.6;
+}
+
+.select-arrow.rotated {
+  transform: rotate(180deg);
+  opacity: 1;
+}
+
+/* ---------- 年份/月份下拉 ---------- */
+.dropdown-menu {
+  /* 不用 display 切换，改透明度 + 位移过渡，保留原版的淡入动画 */
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  min-width: 120px;
+  max-height: 240px;
+  overflow-y: auto;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  border-radius: 12px;
+  border: 1px solid color-mix(in srgb, var(--g-text) 12%, transparent);
+  background: rgba(var(--glass-r), var(--glass-g), var(--glass-b), 0.92);
+  backdrop-filter: blur(20px) saturate(180%);
+  box-shadow: 0 8px 24px var(--g-shadow);
+  z-index: 20;
+
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  pointer-events: none;
+  transition:
+    opacity 0.15s ease,
+    transform 0.15s ease,
+    visibility 0.15s ease;
+}
+
+.dropdown-menu.open {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  pointer-events: auto;
+}
+
+.dropdown-item {
+  padding: 7px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+  color: var(--g-text);
+  font-weight: 500;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.dropdown-item:hover {
+  background: color-mix(in srgb, var(--g-color) 12%, transparent);
+}
+
+.dropdown-item.active {
+  background: var(--g-color);
+  color: #fff;
+  font-weight: 600;
+}
+
+.heatmap-content {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.heatmap-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+  max-width: 360px;
+  width: 100%;
+}
+
+.heatmap-cell {
+  aspect-ratio: 1;
+  border-radius: 6px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition:
+    transform 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.heatmap-cell:hover {
+  transform: scale(1.25);
+  border-color: var(--g-color);
+  z-index: 1;
+}
+
+.heatmap-lv0 {
+  background: color-mix(in srgb, var(--g-text) 6%, transparent);
+  border-color: color-mix(in srgb, var(--g-text) 6%, transparent);
+}
+
+.heatmap-lv1 {
+  background: var(--g-color);
+  opacity: 0.25;
+}
+.heatmap-lv2 {
+  background: var(--g-color);
+  opacity: 0.45;
+}
+.heatmap-lv3 {
+  background: var(--g-color);
+  opacity: 0.65;
+}
+.heatmap-lv4 {
+  background: var(--g-color);
+  opacity: 0.85;
+}
+
+.heatmap-lv1:hover,
+.heatmap-lv2:hover,
+.heatmap-lv3:hover,
+.heatmap-lv4:hover {
+  opacity: 0.95;
+}
+
+.heatmap-legend {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 11px;
+  color: var(--g-text);
+  opacity: 0.5;
+}
+
+.legend-cells {
+  display: flex;
+  gap: 5px;
+}
+
+.legend-cell {
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+}
+
+/* ---------- 首屏编排：粒子画布立即可见，各模块按 60ms 递增上浮 ---------- */
+.index-head .logo,
+.index-head .index-nav,
+.index-body .welcome,
+.index-body .btn-list,
+.index-body .glass-card {
+  animation: index-enter 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.index-head .index-nav {
+  animation-delay: 0.06s;
+}
+
+.index-body .welcome {
+  animation-delay: 0.12s;
+}
+
+.index-body .btn-list {
+  animation-delay: 0.18s;
+}
+
+.index-body .glass-card {
+  animation-delay: 0.24s;
+}
+
+@keyframes index-enter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+/* ====================<响应式>==================== */
+
+@media (max-width: 1280px) {
+  /* [响应式-lg] 大屏 */
+  .index-body {
+    gap: var(--space-md);
+  }
+}
+
+@media (max-width: 1024px) {
+  /* [响应式-md] 平板 */
+  .index-nav {
+    gap: var(--space-md);
+  }
+  .index-body .btn-list {
+    gap: var(--space-md);
+  }
+  .welcome {
+    height: 44vh;
+  }
+  .heatmap-header {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 768px) {
+  /* [响应式-sm] 手机 */
+  .index-page {
+    height: 100dvh;
+    overflow-y: auto;
+  }
+  .index-head .logo {
+    margin-left: var(--space-sm);
+  }
+  .index-head .logo p {
+    font-size: 1.75rem;
+  }
+  .index-nav {
+    gap: var(--space-sm);
+    padding: var(--space-xs) var(--space-sm);
+  }
+  .index-nav .nav-element {
+    font-size: 14px;
+  }
+  .welcome {
+    height: 38vh;
+  }
+  .glass-card {
+    padding: 16px;
+  }
+  .index-body .btn {
+    padding: 10px 24px;
+    font-size: 14px;
+  }
+  .heatmap-wrapper {
+    gap: 12px;
+    width: 90%;
+  }
+  .heatmap-grid {
+    gap: 4px;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  /* [响应式-xs] 窄屏 */
+  .index-head .logo {
+    margin-left: var(--space-xs);
+  }
+  .index-head .logo p {
+    font-size: 1.5rem;
+  }
+  .index-nav {
+    gap: var(--space-xs);
+  }
+  .index-nav .nav-element {
+    padding: 4px 2px;
+    font-size: 13px;
+  }
+  .index-body {
+    gap: var(--space-md);
+  }
+  .welcome {
+    height: 32vh;
+    font-size: clamp(1.5rem, 6vw, 2.4rem);
+  }
+  .index-body .btn-list {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
+    padding: 0 var(--space-lg);
+    box-sizing: border-box;
+  }
+  .index-body .btn {
+    width: fit-content;
+  }
+  .glass-card {
+    padding: 14px;
+  }
+  .select-trigger {
+    padding: 4px 10px;
+    font-size: 12px;
+  }
+  .dropdown-menu {
+    font-size: 12px;
+  }
+  .heatmap-grid {
+    gap: 3px;
+  }
+}

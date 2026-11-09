@@ -1,0 +1,22 @@
+{%- component quote() -%}
+{%- set_global n = 0 -%}
+{%- set_global content = "" -%}
+{%- set_global author = "" -%}
+{%- set_global source = "" -%}
+{%- for line in body | split(pat="\n") -%}
+{%- set t = line | trim -%}
+{%- if t -%}
+{%- if n == 0 -%}{%- set_global content = t -%}{%- elif n == 1 -%}
+{%- set fields = t | split(pat="|") -%}
+{%- set_global author = fields | nth(n=0) | trim -%}
+{%- if fields | length > 1 -%}{%- set_global source = fields | nth(n=1) | trim -%}{%- endif -%}
+{%- endif -%}
+{%- set_global n = n + 1 -%}
+{%- endif -%}
+{%- endfor -%}
+<blockquote class="quote"><div class="quote-body">{{ content }}</div>
+{%- if author or source -%}
+<footer class="quote-cite">{{ author }}{% if source %}<cite class="quote-source">《{{ source }}》</cite>{% endif %}</footer>
+{%- endif -%}
+</blockquote>
+{%- endcomponent quote -%}

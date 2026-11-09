@@ -1,0 +1,51 @@
+/* ====================<页脚>==================== */
+
+/* 站点运行时长 */
+.siteage {
+  width: 80%;
+  height: fit-content;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-sm);
+
+  padding: var(--space-sm);
+  border-radius: var(--radius-full);
+  border: var(--border-width) solid color-mix(in srgb, var(--g-color) 25%, transparent);
+
+  background-color: color-mix(in srgb, var(--g-color) 15%, transparent);
+  color: var(--g-text);
+}
+
+/* 版权 */
+.copyright {
+  width: 80%;
+  height: fit-content;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: var(--space-sm);
+  border-radius: var(--radius-full);
+  border: var(--border-width) solid color-mix(in srgb, var(--g-color) 25%, transparent);
+
+  background-color: color-mix(in srgb, var(--g-color) 15%, transparent);
+  color: var(--g-text);
+}
+
+/* ====================<响应式>==================== */
+
+@media (max-width: 480px) {
+  /* [响应式-xs] 窄屏 */
+  .siteage {
+    width: 90%;
+    font-size: 0.9em;
+  }
+
+  .copyright {
+    width: 100%;
+    font-size: 0.9em;
+  }
+}

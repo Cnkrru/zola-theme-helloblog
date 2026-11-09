@@ -1,0 +1,13 @@
+{# Tera v2 已移除 macro，这里用固定层级的嵌套循环展开 Zola 的标题树（最多 4 级），保持与 Hugo 主题一致的缩进样式 #}
+{% for h1 in page.toc %}
+{% if h1.id %}<a class="toc-item" href="#{{ h1.id }}" title="{{ h1.title }}" style="padding-left: {{ 6 + (h1.level - 1) * 12 }}px">{{ h1.title }}</a>{% endif %}
+{% for h2 in h1.children %}
+{% if h2.id %}<a class="toc-item" href="#{{ h2.id }}" title="{{ h2.title }}" style="padding-left: {{ 6 + (h2.level - 1) * 12 }}px">{{ h2.title }}</a>{% endif %}
+{% for h3 in h2.children %}
+{% if h3.id %}<a class="toc-item" href="#{{ h3.id }}" title="{{ h3.title }}" style="padding-left: {{ 6 + (h3.level - 1) * 12 }}px">{{ h3.title }}</a>{% endif %}
+{% for h4 in h3.children %}
+{% if h4.id %}<a class="toc-item" href="#{{ h4.id }}" title="{{ h4.title }}" style="padding-left: {{ 6 + (h4.level - 1) * 12 }}px">{{ h4.title }}</a>{% endif %}
+{% endfor %}
+{% endfor %}
+{% endfor %}
+{% endfor %}

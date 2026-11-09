@@ -1,0 +1,98 @@
+/*! purple-light Giscus 主题（官方变量 · 紫韵亮色） */
+main {
+    /* ====================<语法高亮（官方默认）>==================== */
+    --color-prettylights-syntax-comment: #6e7781;
+    --color-prettylights-syntax-constant: #0550ae;
+    --color-prettylights-syntax-entity: #8250df;
+    --color-prettylights-syntax-storage-modifier-import: #24292f;
+    --color-prettylights-syntax-entity-tag: #116329;
+    --color-prettylights-syntax-keyword: #cf222e;
+    --color-prettylights-syntax-string: #0a3069;
+    --color-prettylights-syntax-variable: #953800;
+    --color-prettylights-syntax-brackethighlighter-unmatched: #82071e;
+    --color-prettylights-syntax-invalid-illegal-text: #f6f8fa;
+    --color-prettylights-syntax-invalid-illegal-bg: #82071e;
+    --color-prettylights-syntax-carriage-return-text: #f6f8fa;
+    --color-prettylights-syntax-carriage-return-bg: #cf222e;
+    --color-prettylights-syntax-string-regexp: #116329;
+    --color-prettylights-syntax-markup-list: #3b2300;
+    --color-prettylights-syntax-markup-heading: #0550ae;
+    --color-prettylights-syntax-markup-italic: #24292f;
+    --color-prettylights-syntax-markup-bold: #24292f;
+    --color-prettylights-syntax-markup-deleted-text: #82071e;
+    --color-prettylights-syntax-markup-deleted-bg: #ffebe9;
+    --color-prettylights-syntax-markup-inserted-text: #116329;
+    --color-prettylights-syntax-markup-inserted-bg: #dafbe1;
+    --color-prettylights-syntax-markup-changed-text: #953800;
+    --color-prettylights-syntax-markup-changed-bg: #ffd8b5;
+    --color-prettylights-syntax-markup-ignored-text: #eaeef2;
+    --color-prettylights-syntax-markup-ignored-bg: #0550ae;
+    --color-prettylights-syntax-meta-diff-range: #8250df;
+    --color-prettylights-syntax-brackethighlighter-angle: #57606a;
+    --color-prettylights-syntax-sublimelinter-gutter-mark: #8c959f;
+    --color-prettylights-syntax-constant-other-reference-link: #0a3069;
+
+    /* ====================<按钮>==================== */
+    --color-btn-text: #2d1b4e;
+    --color-btn-bg: #f5f0ff;
+    --color-btn-border: rgba(45,27,78,0.12);
+    --color-btn-shadow: 0 1px 2px rgba(45,27,78,0.05);
+    --color-btn-inset-shadow: inset 0 0 0 1px rgba(255,255,255,0.5);
+    --color-btn-hover-bg: #ede6f7;
+    --color-btn-hover-border: rgba(45,27,78,0.20);
+    --color-btn-active-bg: #e6ddf0;
+    --color-btn-active-border: rgba(45,27,78,0.22);
+    --color-btn-selected-bg: rgba(139,92,246,0.10);
+    --color-btn-primary-text: #fff;
+    --color-btn-primary-bg: rgba(139,92,246,0.88);
+    --color-btn-primary-border: rgba(139,92,246,0.88);
+    --color-btn-primary-shadow: 0 1px 2px rgba(45,27,78,0.08);
+    --color-btn-primary-inset-shadow: inset 0 0 0 1px rgba(255,255,255,0.25);
+    --color-btn-primary-hover-bg: #9d7cf7;
+    --color-btn-primary-hover-border: #9d7cf7;
+    --color-btn-primary-selected-bg: rgba(139,92,246,0.92);
+    --color-btn-primary-selected-shadow: inset 0 1px 2px rgba(45,27,78,0.10);
+    --color-btn-primary-disabled-text: rgba(255,255,255,0.45);
+    --color-btn-primary-disabled-bg: rgba(139,92,246,0.30);
+    --color-btn-primary-disabled-border: rgba(139,92,246,0.20);
+
+    /* ====================<控件>==================== */
+    --color-action-list-item-default-hover-bg: rgba(45,27,78,0.05);
+    --color-segmented-control-bg: rgba(45,27,78,0.05);
+    --color-segmented-control-button-bg: #f5f0ff;
+    --color-segmented-control-button-selected-border: rgba(45,27,78,0.12);
+
+    /* ====================<前景/背景/边框>==================== */
+    --color-fg-default: #2d1b4e;
+    --color-fg-muted: rgba(45,27,78,0.55);
+    --color-fg-subtle: rgba(45,27,78,0.32);
+    --color-canvas-default: rgba(245,240,255,0.82);
+    --color-canvas-overlay: rgba(245,240,255,0.96);
+    --color-canvas-inset: rgba(45,27,78,0.03);
+    --color-canvas-subtle: rgba(45,27,78,0.03);
+    --color-border-default: rgba(45,27,78,0.10);
+    --color-border-muted: rgba(45,27,78,0.05);
+    --color-neutral-muted: rgba(45,27,78,0.08);
+
+    /* ====================<强调/状态色>==================== */
+    --color-accent-fg: #8b5cf6;
+    --color-accent-emphasis: #8b5cf6;
+    --color-accent-muted: rgba(139,92,246,0.22);
+    --color-accent-subtle: rgba(139,92,246,0.07);
+    --color-success-fg: #1a7f37;
+    --color-attention-fg: #9a6700;
+    --color-attention-muted: rgba(212,167,44,0.4);
+    --color-attention-subtle: #fff8c5;
+    --color-danger-fg: #d1242f;
+    --color-danger-muted: rgba(242,92,84,0.4);
+    --color-danger-subtle: #ffebe9;
+
+    /* ====================<灰阶/社交反应>==================== */
+    --color-scale-gray-1: #eaeef2;
+    --color-scale-blue-1: #ddf4ff;
+    --color-scale-gray-7: rgba(45,27,78,0.05);
+    --color-scale-blue-8: rgba(139,92,246,0.10);
+    --color-social-reaction-bg-hover: var(--color-scale-gray-7);
+    --color-social-reaction-bg-reacted-hover: var(--color-scale-blue-8);
+    --color-primer-shadow-inset: inset 0 1px 0 rgba(45,27,78,0.04);
+}

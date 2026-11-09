@@ -1,0 +1,28 @@
+{# 样式表：Zola 不打包资源，这里逐文件按内容哈希加版本号，
+   任何一个 CSS 改动都会只让对应文件失效，避免浏览器继续用旧缓存。 #}
+{% set cssFiles = [
+  "css/layout/var.css",
+  "css/theme/color.css",
+  "css/theme/_sakura.css",
+  "css/theme/_blue.css",
+  "css/theme/_cyan.css",
+  "css/theme/_ink.css",
+  "css/theme/_purple.css",
+  "css/main.css",
+  "css/layout/shell.css",
+  "css/layout/immersive.css",
+  "css/index.css.base.css",
+  "css/pheader.css",
+  "css/pfooter.css",
+  "css/psidebar.css",
+  "css/pamin/post.css",
+  "css/pamin/postlist.css",
+  "css/pamin/archive.css",
+  "css/pamin/tags.css",
+  "css/pamin/link.css",
+  "css/pamin/about.css",
+  "css/pamin/notFound.css"
+] %}
+{% for f in cssFiles %}
+<link rel="stylesheet" href="{{ get_url(path=f) }}?v={{ get_hash(path=f, sha_type=256, base64=false) }}">
+{% endfor %}

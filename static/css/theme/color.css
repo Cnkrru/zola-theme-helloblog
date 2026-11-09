@@ -1,0 +1,26 @@
+:root {
+  --glass-opacity: 0; /* 玻璃底透明度，由 hugo.toml 的 glass_opacity 覆盖 */
+
+  --color-info: #3b82f6;    /* 信息蓝 */
+  --color-success: #22c55e; /* 成功绿 */
+  --color-warning: #f59e0b; /* 警告橙 */
+  --color-error: #ef4444;   /* 错误红 */
+}
+
+.light {
+  /* 亮色主题阴影 */
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06);
+  --shadow-md: 0 1px 2px rgba(15, 23, 42, 0.06), 0 2px 6px rgba(15, 23, 42, 0.08);
+  --shadow-lg:
+    0 1px 2px rgba(15, 23, 42, 0.06), 0 2px 6px rgba(15, 23, 42, 0.09),
+    0 12px 28px rgba(15, 23, 42, 0.12);
+}
+
+.dark {
+  /* 暗色主题阴影 */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 1px 2px rgba(0, 0, 0, 0.34), 0 2px 6px rgba(0, 0, 0, 0.4);
+  --shadow-lg:
+    0 1px 2px rgba(0, 0, 0, 0.34), 0 2px 6px rgba(0, 0, 0, 0.42),
+    0 12px 28px rgba(0, 0, 0, 0.52);
+}

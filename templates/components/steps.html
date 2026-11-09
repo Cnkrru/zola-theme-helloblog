@@ -1,0 +1,15 @@
+{%- component steps() -%}
+{%- set_global n = 0 -%}
+<div class="steps">
+{%- for line in body | split(pat="\n") -%}
+{%- set t = line | trim -%}
+{%- if t -%}
+{%- set_global n = n + 1 -%}
+{%- set fields = t | split(pat="|") -%}
+<div class="steps-item"><span class="steps-no">{{ n }}</span><div class="steps-body"><div class="steps-title">{{ fields | nth(n=0) | trim }}</div>
+{%- if fields | length > 1 %}<div class="steps-desc">{{ fields | nth(n=1) | trim }}</div>{% endif -%}
+</div></div>
+{%- endif -%}
+{%- endfor -%}
+</div>
+{%- endcomponent steps -%}

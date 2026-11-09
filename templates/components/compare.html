@@ -1,0 +1,34 @@
+{%- component compare() -%}
+{%- set_global labels_raw = "" -%}
+{%- set_global panels_raw = "" -%}
+{%- set_global cur = "" -%}
+{%- set_global started = false -%}
+{%- for line in body | split(pat="\n") -%}
+{%- set t = line | trim -%}
+{%- if t is starting_with(pat="@tab ") -%}
+{%- if started -%}{%- if panels_raw -%}{%- set_global panels_raw = panels_raw ~ "@@PANEL@@" -%}{%- endif -%}{%- set_global panels_raw = panels_raw ~ cur -%}{%- endif -%}
+{%- if labels_raw -%}{%- set_global labels_raw = labels_raw ~ "@@TAB@@" -%}{%- endif -%}
+{%- set_global labels_raw = labels_raw ~ (t | replace(from="@tab ", to="")) -%}
+{%- set_global cur = "" -%}
+{%- set_global started = true -%}
+{%- elif started -%}
+{%- set_global cur = cur ~ line ~ "\n" -%}
+{%- endif -%}
+{%- endfor -%}
+{%- if started -%}{%- if panels_raw -%}{%- set_global panels_raw = panels_raw ~ "@@PANEL@@" -%}{%- endif -%}{%- set_global panels_raw = panels_raw ~ cur -%}{%- endif -%}
+{%- if started -%}
+{%- set labels = labels_raw | split(pat="@@TAB@@") -%}
+{%- set panels = panels_raw | split(pat="@@PANEL@@") -%}
+<div class="compare">
+{%- for label in labels -%}
+{%- set idx = loop.index0 -%}
+<div class="compare-col"><div class="compare-head">{{ label }}</div><ul>
+{%- for line in (panels | nth(n=idx)) | split(pat="\n") -%}
+{%- set t = line | trim -%}
+{%- if t -%}<li>{{ t }}</li>{%- endif -%}
+{%- endfor -%}
+</ul></div>
+{%- endfor -%}
+</div>
+{%- endif -%}
+{%- endcomponent compare -%}

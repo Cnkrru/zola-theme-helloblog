@@ -1,0 +1,87 @@
+<header class="header">
+  {% set homeUrl = get_url(path="", lang=lang) %}
+  {% if not homeUrl is ending_with(pat="/") %}{% set homeUrl = homeUrl ~ "/" %}{% endif %}
+  <a class="logo" href="{{ homeUrl }}">
+    <p>{{ config.title }}</p>
+  </a>
+
+  <div class="search" data-index="">
+    <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="11" cy="11" r="8" />
+      <line x1="21" y1="21" x2="16.65" y2="16.65" />
+    </svg>
+    <input type="text" placeholder="{{ trans(key='search.placeholder') }}" aria-label="{{ trans(key='search.placeholder') }}" />
+  </div>
+
+  <div class="button-list">
+    <button class="h-button menu-btn" type="button" title="{{ trans(key='header.menu') }}">
+      <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="4" y1="6" x2="20" y2="6" />
+        <line x1="4" y1="12" x2="20" y2="12" />
+        <line x1="4" y1="18" x2="20" y2="18" />
+      </svg>
+    </button>
+
+    <button class="h-button ld-btn" type="button" title="{{ trans(key='header.theme') }}">
+      <svg class="icon icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="5" />
+        <line x1="12" y1="1" x2="12" y2="3" />
+        <line x1="12" y1="21" x2="12" y2="23" />
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+        <line x1="1" y1="12" x2="3" y2="12" />
+        <line x1="21" y1="12" x2="23" y2="12" />
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+      </svg>
+      <svg class="icon icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+      </svg>
+    </button>
+
+    <button class="h-button immersive-btn" type="button" title="{{ trans(key='header.immersive') }}">
+      <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+        <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+      </svg>
+    </button>
+
+    <button class="h-button music-btn" type="button" title="{{ trans(key='header.music') }}">
+      <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 18V5l12-2v13" />
+        <circle cx="6" cy="18" r="3" />
+        <circle cx="18" cy="16" r="3" />
+      </svg>
+    </button>
+
+    {% set translations = [] %}
+    {% if page is defined and page.translations is defined %}{% set translations = page.translations %}
+    {% elif section is defined and section.translations is defined %}{% set translations = section.translations %}{% endif %}
+    {% if config.extra.language_names | length > 1 %}
+    <div class="locale-wrap">
+      <button class="h-button locale-btn" type="button" title="{{ trans(key='header.language') }}" aria-label="{{ trans(key='header.language') }}" aria-haspopup="menu" aria-expanded="false">
+        <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+          <path d="M12.87 15.07l-2.54-2.51.03-.03A17.52 17.52 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.55 7.92 10.36 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z" />
+        </svg>
+      </button>
+      <ul class="locale-menu" role="menu" aria-label="{{ trans(key='header.language') }}">
+        {% for code, name in config.extra.language_names %}
+        {% set_global langUrl = "" %}
+        {% for t in translations %}{% if t.lang == code %}{% set_global langUrl = t.permalink %}{% endif %}{% endfor %}
+        {% if not langUrl %}{% set_global langUrl = get_url(path="", lang=code) %}{% if not langUrl is ending_with(pat="/") %}{% set_global langUrl = langUrl ~ "/" %}{% endif %}{% endif %}
+        <li role="none">
+          <a class="locale-item{% if code == lang %} on{% endif %}" href="{{ langUrl }}" role="menuitemradio" aria-checked="{{ code == lang }}" hreflang="{{ code }}" lang="{{ code }}">
+            <span>{{ name }}</span>
+            {% if code == lang %}
+            <svg class="locale-check" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            {% endif %}
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+  </div>
+</header>

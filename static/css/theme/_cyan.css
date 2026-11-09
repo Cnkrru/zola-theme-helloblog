@@ -1,0 +1,27 @@
+/* 风格方案 D：青空（冰蓝基调 / 深海夜色），颜色迁移自 blog-map themes/cyan.css */
+
+.cyan.light {
+    --g-color:#06b6d4;                      /* 青空主色 */
+    --g-on-color:#062b31;                   /* 主色上的文字（青亮，压深青字） */
+    --g-bg:#e0f7fa;                         /* 冰蓝雾底 */
+    --glass-r:240;                          /* 玻璃底色 R（= 冰蓝亮面） */
+    --glass-g:253;                          /* 玻璃底色 G */
+    --glass-b:255;                          /* 玻璃底色 B */
+    --g-text:#164e63;                       /* 深青褐 */
+    --g-hover: #0891b2;                     /* 深海 */
+    --g-shadow: rgba(6, 182, 212, 0.14);    /* 青影 */
+    --g-gradient: linear-gradient(90deg, #06b6d4, #22d3ee, #67e8f9, #22d3ee, #06b6d4);
+}
+
+.cyan.dark {
+    --g-color:#22d3ee;                      /* 亮青（深海上更跳） */
+    --g-on-color:#041a1f;                   /* 主色上的文字（亮青，压深海底字） */
+    --g-bg:#041a1f;                         /* 深海底 */
+    --glass-r:12;                           /* 玻璃底色 R（= 深海面） */
+    --glass-g:45;                           /* 玻璃底色 G */
+    --glass-b:55;                           /* 玻璃底色 B */
+    --g-text:#cffafe;                       /* 冰蓝白 */
+    --g-hover: #22d3ee;                     /* 亮青 */
+    --g-shadow: rgba(0, 0, 0, 0.40);        /* 暗色阴影 */
+    --g-gradient: linear-gradient(90deg, #0891b2, #06b6d4, #22d3ee, #06b6d4, #0891b2);
+}

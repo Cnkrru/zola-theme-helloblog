@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="{{ lang }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Zola">
+    <title>404 | {{ config.title }}</title>
+    <link rel="icon" href="{{ get_url(path='favicon.ico') }}">
+    {% include "partials/css.html" %}
+    <style>:root { --glass-opacity: {{ config.extra.glass_opacity | default(value=0.5) }}; }</style>
+  </head>
+  <body class="{{ config.extra.color_theme | default(value='sakura') }} dark">
+    <header class="header">
+      <a class="logo" href="{{ get_url(path='') }}"><p>{{ config.title }}</p></a>
+      <div class="button-list">
+        <button class="h-button ld-btn ld-only" type="button" title="{{ trans(key='header.theme') }}">
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        </button>
+      </div>
+    </header>
+    <div class="center">
+      <main class="main" id="main">
+        <div class="notfound">
+          <div class="error">404</div>
+          <h1 class="title">{{ trans(key="notfound.title") }}</h1>
+          <p class="text">{{ trans(key="notfound.text") }}</p>
+          <a href="{{ get_url(path='') }}" class="back-index">{{ trans(key="notfound.back") }}</a>
+          {% set postsSection = get_section(path="posts/_index.md") %}
+          {% set posts = postsSection.pages %}
+          {% if posts | length > 0 %}
+          <div class="notfound-more">
+            <p class="notfound-hint">{{ trans(key="notfound.latest") }}</p>
+            <ul class="notfound-list">
+              {% for post in posts %}{% if loop.index <= 3 %}
+              <li>
+                <a href="{{ post.permalink }}">{{ post.title }}</a>
+                <time datetime="{{ post.date | date(format='%Y-%m-%d') }}">{{ post.date | date(format="%Y-%m-%d") }}</time>
+              </li>
+              {% endif %}{% endfor %}
+            </ul>
+            <p class="notfound-links">
+              <a href="{{ get_url(path='category/') }}">{{ trans(key="nav.category") }}</a>
+              <a href="{{ get_url(path='tags/') }}">{{ trans(key="nav.tags") }}</a>
+            </p>
+          </div>
+          {% endif %}
+        </div>
+      </main>
+    </div>
+    <script type="module" src="{{ get_url(path='js/main.js') }}?v={{ get_hash(path='js/main.js', sha_type=256, base64=false) }}"></script>
+  </body>
+</html>

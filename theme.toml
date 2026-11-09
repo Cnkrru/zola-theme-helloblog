@@ -1,0 +1,84 @@
+name = "helloblog"
+description = "A glassmorphism personal blog theme for Zola with multilingual support, dark mode, local search and rich Markdown components."
+tags = ["blog", "personal", "multilingual", "dark-mode", "glassmorphism", "search", "taxonomies", "responsive"]
+license = "MIT"
+homepage = "https://github.com/Cnkrru/zola-theme-helloblog"
+demo = "https://helloblog.pages.dev/"
+min_version = "0.23.6"
+
+[author]
+name = "Cnkrru"
+homepage = "https://github.com/Cnkrru"
+
+[original]
+author = "Cnkrru"
+repo = "https://github.com/Cnkrru/hugo-theme-helloblog"
+
+# 主题默认值：Zola 会把这里的 [extra] 与站点 config.toml 的 [extra] 合并，
+# 表逐 key 合并，数组（如 menu）整体替换，站点只需写要覆盖的项。
+[extra]
+keywords = []
+images = ["og-cover.png"]
+color_theme = "sakura"
+glass_opacity = 0.5
+siteage = ""
+avatar = "avator.webp"
+saying = ""
+copyright = ""
+
+[extra.index]
+logo = "Helloblog"
+welcome = ["Hello, world", "欢迎来到示例站点"]
+increase_speed = 60
+decrease_speed = 40
+loop_speed = 1000
+particle_enable = true
+particle_distance = 180
+
+[extra.background]
+enable = false
+image = "background.webp"
+overlay_dark = 0.6
+overlay_light = 0.5
+
+[extra.giscus]
+enable = false
+repo = ""
+repo_id = ""
+category = "General"
+category_id = ""
+mapping = "pathname"
+strict = "0"
+reactions_enabled = "1"
+emit_metadata = "0"
+input_position = "bottom"
+
+[extra.language_names]
+zh = "中文"
+en = "English"
+
+[[extra.menu]]
+key = "nav.posts"
+name = "Posts"
+path = "posts/"
+icon = "posts"
+[[extra.menu]]
+key = "nav.about"
+name = "About"
+path = "about/"
+icon = "about"
+[[extra.menu]]
+key = "nav.category"
+name = "Archive"
+path = "category/"
+icon = "category"
+[[extra.menu]]
+key = "nav.tags"
+name = "Tags"
+path = "tags/"
+icon = "tags"
+[[extra.menu]]
+key = "nav.link"
+name = "Links"
+path = "link/"
+icon = "link"

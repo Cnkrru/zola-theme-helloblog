@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block main %}
+<div class="tag-list" data-title="{{ trans(key='tags.postsUnder') }}">
+  <div class="timeline-area">
+    <div class="tl-bar">
+      <span class="tl-title">{{ trans(key="tags.postsUnder") | replace(from="{tag}", to=term.name) }}</span>
+    </div>
+    <div class="tl-body">
+      {% for post in term.pages %}
+      <a class="tl-item" href="{{ post.permalink }}">
+        <span class="tl-dot"></span>
+        <span class="tl-item-title">{{ post.title }}</span>
+        <span class="tl-item-date">{{ post.date | date(format="%Y-%m-%d") }}</span>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock main %}

@@ -1,0 +1,3 @@
+{%- component warning(@lang, title: string = "") -%}
+{% <admonition level="warning" title={title} lang={lang | default(value="zh")}> %}{{ body | safe }}{% </admonition> %}
+{%- endcomponent warning -%}

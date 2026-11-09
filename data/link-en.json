@@ -1,0 +1,142 @@
+[
+  {
+    "id": "1",
+    "name": "GitHub",
+    "category": "Personal",
+    "description": "My GitHub profile",
+    "url": "https://github.com/Cnkrru"
+  },
+  {
+    "id": "2",
+    "name": "Bilibili",
+    "category": "Personal",
+    "description": "My Bilibili profile",
+    "url": "https://space.bilibili.com/452778044"
+  },
+  {
+    "id": "3",
+    "name": "Lorem Picsum",
+    "category": "Frontend",
+    "description": "Random image placeholder service",
+    "url": "https://picsum.photos/"
+  },
+  {
+    "id": "4",
+    "name": "imgcook",
+    "category": "Frontend",
+    "description": "Image to code tool",
+    "url": "https://www.imgcook.com/"
+  },
+  {
+    "id": "5",
+    "name": "Hexo",
+    "category": "SSG",
+    "description": "Hexo documentation",
+    "url": "https://hexo.io/zh-cn/"
+  },
+  {
+    "id": "6",
+    "name": "Hugo",
+    "category": "SSG",
+    "description": "Hugo documentation",
+    "url": "https://gohugo.io/"
+  },
+  {
+    "id": "7",
+    "name": "dumi",
+    "category": "SSG",
+    "description": "dumi documentation",
+    "url": "https://d.umijs.org/"
+  },
+  {
+    "id": "8",
+    "name": "docsify",
+    "category": "SSG",
+    "description": "docsify documentation",
+    "url": "https://docsify.js.org/#/"
+  },
+  {
+    "id": "9",
+    "name": "CodePen",
+    "category": "Frontend",
+    "description": "Frontend code sharing community",
+    "url": "https://codepen.io/"
+  },
+  {
+    "id": "10",
+    "name": "Giscus",
+    "category": "Frontend APIs",
+    "description": "Comment system powered by GitHub Discussions",
+    "url": "https://giscus.app/"
+  },
+  {
+    "id": "11",
+    "name": "Baidu Analytics",
+    "category": "Frontend APIs",
+    "description": "Baidu website analytics",
+    "url": "https://tongji.baidu.com/web/welcome/login"
+  },
+  {
+    "id": "12",
+    "name": "Google Analytics",
+    "category": "Frontend APIs",
+    "description": "Google website analytics",
+    "url": "https://analytics.google.com/"
+  },
+  {
+    "id": "13",
+    "name": "Vue",
+    "category": "Frontend",
+    "description": "Vue documentation",
+    "url": "https://vuejs.org/"
+  },
+  {
+    "id": "14",
+    "name": "Portfolio",
+    "category": "Personal",
+    "description": "My portfolio site",
+    "url": "https://portfolio.cnkrru.top"
+  },
+  {
+    "id": "15",
+    "name": "Notes",
+    "category": "Personal",
+    "description": "My personal notes site",
+    "url": "https://notes.cnkrru.top"
+  },
+  {
+    "id": "17",
+    "name": "Steam",
+    "category": "Official",
+    "description": "Steam official site",
+    "url": "https://store.steampowered.com/"
+  },
+  {
+    "id": "18",
+    "name": "MDN",
+    "category": "Frontend",
+    "description": "Web development documentation",
+    "url": "https://developer.mozilla.org/zh-CN/"
+  },
+  {
+    "id": "19",
+    "name": "Node.js",
+    "category": "Backend",
+    "description": "JavaScript backend documentation",
+    "url": "https://node.org.cn/docs/latest/api/documentation.html"
+  },
+  {
+    "id": "20",
+    "name": "canvas-special",
+    "category": "Frontend",
+    "description": "A collection of Canvas effect demos",
+    "url": "https://bxm0927.github.io/canvas-special/"
+  },
+  {
+    "id": "21",
+    "name": "BootstrapMB",
+    "category": "Frontend",
+    "description": "Frontend templates and assets",
+    "url": "https://www.bootstrapmb.com/"
+  }
+]

@@ -1,0 +1,16 @@
+/* 沉浸模式：隐藏侧栏、正文占满宽度，顶栏保留 */
+.immersive .main {
+  width: 100% !important;
+}
+
+.immersive .sidebar {
+  display: none !important;
+}
+
+/* ====================<响应式>==================== */
+@media (max-width: 768px) {
+  /* [响应式-sm] 手机：侧栏是左侧抽屉，保持显示，避免汉堡无法展开 */
+  .immersive .sidebar {
+    display: flex !important;
+  }
+}

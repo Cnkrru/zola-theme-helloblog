@@ -1,0 +1,236 @@
+/* ====================<归档页>==================== */
+
+.archive-list {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+}
+
+.tool-area {
+  flex-shrink: 0;
+  margin-bottom: var(--space-lg);
+}
+
+.view-tabs {
+  width: fit-content;
+  display: flex;
+  gap: 4px;
+  padding: 3px;
+  border-radius: var(--radius-full);
+  border: var(--border-width) solid color-mix(in srgb, var(--g-color) 25%, transparent);
+  background-color: rgba(var(--glass-r), var(--glass-g), var(--glass-b), 0.5);
+}
+
+.view-tab {
+  padding: 4px 16px;
+  border-radius: var(--radius-full);
+  border: none;
+  background-color: transparent;
+  color: var(--g-text);
+  cursor: pointer;
+  font-size: 13px;
+  transition:
+    color 0.25s ease,
+    background-color 0.2s ease;
+}
+
+.view-tab.tab-on {
+  background-color: var(--g-color);
+  color: #fff;
+}
+
+.list-area {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+/* 三个视图由 JS 切换 */
+.arch-view {
+  display: none;
+}
+
+.arch-view.view-on {
+  display: block;
+}
+
+.arch-group {
+  margin-bottom: var(--space-md);
+  border-radius: var(--space-lg);
+  border: var(--border-width) solid color-mix(in srgb, var(--g-color) 25%, transparent);
+  background-color: rgba(var(--glass-r), var(--glass-g), var(--glass-b), 0.5);
+  overflow: hidden;
+  transition:
+    transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.3s ease;
+}
+
+.arch-group:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 2px 6px rgba(0, 0, 0, 0.06),
+    0 8px 20px rgba(0, 0, 0, 0.1),
+    0 0 0 1px color-mix(in srgb, var(--g-color) 30%, transparent);
+}
+
+/* 原版是 <a href="#">，这里用 button 承担同一个展开动作 */
+.group-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  width: 100%;
+  padding: var(--space-md) var(--space-lg);
+  border: none;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.group-header:hover,
+.group-header.header-on {
+  background-color: color-mix(in srgb, var(--g-color) 8%, transparent);
+}
+
+.group-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--g-text);
+}
+
+.group-count {
+  font-size: 13px;
+  color: var(--g-text);
+  opacity: 0.45;
+  margin-right: auto;
+}
+
+.group-arrow {
+  font-size: 12px;
+  color: var(--g-text);
+  opacity: 0.4;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.group-arrow.arrow-open {
+  transform: rotate(180deg);
+}
+
+.group-body {
+  display: grid;
+  grid-template-rows: 0fr;
+  overflow: hidden;
+  transition: grid-template-rows 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  border-top: var(--border-width) solid color-mix(in srgb, var(--g-color) 25%, transparent);
+}
+
+.group-body.open {
+  grid-template-rows: 1fr;
+}
+
+.group-list {
+  overflow: hidden;
+  min-height: 0;
+}
+
+.group-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-sm) var(--space-lg) var(--space-sm) 20px;
+  text-decoration: none;
+  border-bottom: 1px solid color-mix(in srgb, var(--g-color) 30%, transparent);
+  transition:
+    background-color 0.15s ease,
+    padding-left 0.2s ease;
+}
+
+.group-item:hover {
+  background-color: color-mix(in srgb, var(--g-color) 8%, transparent);
+  padding-left: 24px;
+}
+
+.group-item:last-child {
+  border-bottom: none;
+}
+
+.item-title {
+  flex: 1;
+  min-width: 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--g-text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.item-tags {
+  display: flex;
+  gap: var(--space-xs);
+  flex-shrink: 0;
+}
+
+.item-tag {
+  padding: 1px 7px;
+  font-size: 11px;
+  border-radius: var(--radius-full);
+  background-color: color-mix(in srgb, var(--g-color) 15%, transparent);
+  color: var(--g-text);
+  opacity: 0.7;
+}
+
+.item-date {
+  font-size: 12px;
+  opacity: 0.4;
+  color: var(--g-text);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* 空态：归档无文章 / 标签页无标签共用 */
+.arch-empty {
+  padding: var(--space-xl);
+  text-align: center;
+  color: var(--g-text);
+  opacity: 0.5;
+}
+
+/* ====================<响应式>==================== */
+@media (max-width: 768px) {
+  /* [响应式-sm] 手机：根容器放开定高，保住整页滚动 */
+  .archive-list {
+    height: auto;
+  }
+  .tool-area {
+    margin-bottom: var(--space-md);
+  }
+  .group-header {
+    padding: var(--space-sm) var(--space-md);
+  }
+  .group-item {
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-md) var(--space-sm) 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  /* [响应式-xs] 窄屏：标签与日期逐级缩小 */
+  .view-tab {
+    padding: 4px 12px;
+    font-size: 12px;
+  }
+  .group-item {
+    gap: var(--space-xs);
+    padding: var(--space-xs) var(--space-sm) var(--space-xs) 10px;
+  }
+  .item-tag {
+    padding: 1px 5px;
+    font-size: 10px;
+  }
+  .item-date {
+    font-size: 11px;
+  }
+}

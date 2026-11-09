@@ -1,0 +1,8 @@
+{%- component details(@lang, summary: string = "") -%}
+{%- set label = summary -%}
+{%- if not label -%}{%- set label = trans(key="details.summary", lang=lang | default(value="zh")) -%}{%- endif -%}
+<details class="details">
+<summary>{{ label }}</summary>
+<div class="details-body">{{ body | trim }}</div>
+</details>
+{%- endcomponent details -%}

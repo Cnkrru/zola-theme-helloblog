@@ -1,0 +1,342 @@
+# ==============================================================================
+# Helloblog Zola 主题示例配置（示例站点全量配置）
+#
+# 主题默认值在 theme.toml 的 [extra] 中，Zola 会把两者按 key 合并（表逐 key 合并，
+# 数组整体替换），站点里只写要覆盖的项即可。本文件是示例站点的全量配置，可作为
+# 所有可选项的参考。
+#
+# 注意：[translations] 与 [languages] 不会从主题合并，安装主题时必须把这两段
+# 复制到站点 config.toml，否则 trans() 会报错。
+# ==============================================================================
+
+base_url = "https://example.org/"
+title = "Helloblog"
+description = "Helloblog 示例站点，演示主题的全部配置项。"
+default_language = "zh"
+compile_sass = false
+minify_html = false
+generate_feeds = true
+build_search_index = false
+
+taxonomies = [{ name = "tags" }]
+
+# 语法高亮：giallo 单主题 + 行内颜色，避免额外的主题 CSS 依赖
+[markdown.highlighting]
+theme = "github-dark"
+style = "inline"
+
+# ---------- 站点参数 ----------
+[extra]
+keywords = ["Zola", "blog", "helloblog"]
+images = ["og-cover.png"]
+color_theme = "sakura"   # sakura / purple / ink / cyan / blue
+glass_opacity = 0.5      # 玻璃拟态透明度 0~1
+siteage = "2026-10-04"   # 建站日期 YYYY-MM-DD，留空则不显示运行天数
+avatar = "avator.webp"   # 侧栏头像，相对 static 目录
+saying = ""              # 侧栏一句话，留空用翻译文案
+copyright = "2026 Helloblog, power by Zola, All rights reserved"
+
+[extra.index]
+logo = "Helloblog"
+welcome = ["Hello, world", "欢迎来到示例站点"]
+increase_speed = 60
+decrease_speed = 40
+loop_speed = 1000
+particle_enable = true
+particle_distance = 180
+
+[extra.background]
+enable = true
+image = "background.webp"
+overlay_dark = 0.6
+overlay_light = 0.5
+
+[extra.giscus]
+enable = false
+repo = "owner/repo"
+repo_id = ""
+category = "General"
+category_id = ""
+mapping = "pathname"
+strict = "0"
+reactions_enabled = "1"
+emit_metadata = "0"
+input_position = "bottom"
+
+# 导航：key 命中 [translations] 中的同名键，name 作为回退文案
+[[extra.menu]]
+key = "nav.posts"
+name = "文章"
+path = "posts/"
+icon = "posts"
+[[extra.menu]]
+key = "nav.about"
+name = "关于"
+path = "about/"
+icon = "about"
+[[extra.menu]]
+key = "nav.category"
+name = "归档"
+path = "category/"
+icon = "category"
+[[extra.menu]]
+key = "nav.tags"
+name = "标签"
+path = "tags/"
+icon = "tags"
+[[extra.menu]]
+key = "nav.link"
+name = "友链"
+path = "link/"
+icon = "link"
+
+# 语言显示名，用于语言切换器
+[extra.language_names]
+zh = "中文"
+en = "English"
+
+# ---------- 多语言 ----------
+[languages.zh]
+
+[languages.en]
+title = "Helloblog"
+description = "Helloblog example site, demonstrating every theme option."
+generate_feeds = true
+taxonomies = [{ name = "tags" }]
+
+# ---------- 界面文案 ----------
+[translations]
+"header.menu" = "菜单"
+"header.theme" = "切换明暗"
+"header.immersive" = "沉浸阅读"
+"header.music" = "音乐"
+"header.language" = "语言"
+"search.placeholder" = "搜索"
+"search.failed" = "搜索索引加载失败"
+"search.noResult" = "搜索「{kw}」：未找到结果"
+"search.counter" = "{count} 个结果"
+"search.category" = "分类"
+
+"admonition.tip" = "提示"
+"admonition.info" = "信息"
+"admonition.warning" = "警告"
+"admonition.danger" = "危险"
+"details.summary" = "详情"
+
+"sidebar.avatar" = "头像"
+"sidebar.avatarAlt" = "Cnkrru的头像"
+"sidebar.saying" = "欢迎来到我的博客"
+"sidebar.unknown" = "未知"
+"sidebar.stats" = "统计"
+"sidebar.siteStats" = "站点统计"
+"sidebar.statsClose" = "关闭"
+"sidebar.busuanzi" = "不蒜子"
+"sidebar.todayPv" = "今日访问"
+"sidebar.todayUv" = "今日访客"
+"sidebar.sitePv" = "站点访问"
+"sidebar.siteUv" = "站点访客"
+"sidebar.pagePv" = "本页浏览"
+"sidebar.pageUv" = "本页访客"
+
+"home.welcome" = "欢迎来到我的博客"
+"home.read" = "开始阅读"
+"home.about" = "关于我"
+"home.latest" = "最新文章"
+
+"nav.posts" = "文章"
+"nav.about" = "关于"
+"nav.category" = "归档"
+"nav.tags" = "标签"
+"nav.link" = "链接"
+
+"music.cover" = "封面"
+"music.close" = "关闭"
+"music.prev" = "上一首"
+"music.play" = "播放/暂停"
+"music.next" = "下一首"
+"music.mute" = "静音"
+"music.list" = "播放列表 ({{ . }})"
+"music.emptyTitle" = "未选择歌曲"
+"music.emptyArtist" = "未知艺术家"
+"music.loading" = "加载中…"
+"music.loadFailed" = "音乐源加载失败"
+
+"toc.title" = "目录"
+"toc.open" = "打开目录"
+"toc.heading" = "文章目录"
+"toc.close" = "关闭目录"
+"backtop.title" = "返回顶部"
+
+"post.published" = "发布"
+"post.updated" = "更新于"
+"post.history" = "更新记录"
+"post.prev" = "上一篇"
+"post.next" = "下一篇"
+"post.none" = "暂无"
+"post.words" = "总字数"
+"post.readingTime" = "预计时间"
+"post.minutes" = "{{ . }}分钟"
+"post.related" = "相关文章"
+"post.share" = "分享这篇文章"
+"post.wechatQr" = "微信分享二维码"
+"post.copyLink" = "复制链接"
+"post.wechat" = "微信"
+"post.weibo" = "微博"
+"post.comment" = "评论"
+"post.commentHint" = "想说点什么呢……"
+"post.commentFailed" = "评论加载失败，请检查网络后刷新重试"
+"post.anchor" = "此标题的链接"
+
+"arch.category" = "分类"
+"arch.year" = "年份"
+"arch.month" = "月份"
+"arch.postsCount" = "{{ . }} 篇"
+"arch.empty" = "暂无文章"
+"arch.emptyTags" = "暂无标签"
+"arch.uncategorized" = "未分类"
+"tags.postsUnder" = "「{tag}」下的文章"
+"link.prev" = "上一页"
+"link.next" = "下一页"
+"link.category" = "分类"
+"link.pageInfo" = "第 1 / {{ . }} 页"
+"link.currentCategory" = "当前分类：{{ . }}"
+"link.empty" = "暂无链接"
+"link.uncategorized" = "未分类"
+
+"heatmap.title" = "创作活动热力图"
+"heatmap.months" = "一月|二月|三月|四月|五月|六月|七月|八月|九月|十月|十一月|十二月"
+"heatmap.year" = "{{ . }}年"
+"heatmap.empty" = "暂无数据"
+"heatmap.less" = "少"
+"heatmap.more" = "多"
+
+"pager.prev" = "上一页"
+"pager.next" = "下一页"
+"pager.total" = "共 {{ . }} 页"
+
+"footer.runtime" = "本博客已运行: %s 天 %s 时 %s 分 %s秒"
+
+"a11y.skipToContent" = "跳到主要内容"
+
+"notfound.title" = "页面不存在"
+"notfound.text" = "你访问的页面可能已被移除或地址有误。"
+"notfound.back" = "返回首页"
+"notfound.latest" = "或者看看最近的文章"
+
+[languages.en.translations]
+"header.menu" = "Menu"
+"header.theme" = "Toggle theme"
+"header.immersive" = "Immersive reading"
+"header.music" = "Music"
+"header.language" = "Language"
+"search.placeholder" = "Search"
+"search.failed" = "Failed to load search index"
+"search.noResult" = 'No results for "{kw}"'
+"search.counter" = "{count} results"
+"search.category" = "Category"
+
+"admonition.tip" = "Tip"
+"admonition.info" = "Note"
+"admonition.warning" = "Warning"
+"admonition.danger" = "Danger"
+"details.summary" = "Details"
+
+"sidebar.avatar" = "Avatar"
+"sidebar.avatarAlt" = "Cnkrru's avatar"
+"sidebar.unknown" = "Unknown"
+"sidebar.stats" = "Stats"
+"sidebar.siteStats" = "Site stats"
+"sidebar.statsClose" = "Close"
+"sidebar.busuanzi" = "busuanzi"
+"sidebar.todayPv" = "Today views"
+"sidebar.todayUv" = "Today visitors"
+"sidebar.sitePv" = "Total views"
+"sidebar.siteUv" = "Total visitors"
+"sidebar.pagePv" = "Page views"
+"sidebar.pageUv" = "Page visitors"
+"sidebar.saying" = "Welcome to my blog"
+
+"home.welcome" = "Welcome to my blog"
+"home.read" = "Start reading"
+"home.about" = "About me"
+"home.latest" = "Latest post"
+
+"nav.posts" = "Posts"
+"nav.about" = "About"
+"nav.category" = "Archive"
+"nav.tags" = "Tags"
+"nav.link" = "Links"
+
+"music.cover" = "Cover"
+"music.close" = "Close"
+"music.prev" = "Previous"
+"music.play" = "Play/Pause"
+"music.next" = "Next"
+"music.mute" = "Mute"
+"music.list" = "Playlist ({{ . }})"
+"music.emptyTitle" = "No song selected"
+"music.emptyArtist" = "Unknown artist"
+"music.loading" = "Loading…"
+"music.loadFailed" = "Failed to load audio source"
+
+"toc.title" = "Contents"
+"toc.open" = "Open contents"
+"toc.heading" = "Table of contents"
+"toc.close" = "Close contents"
+"backtop.title" = "Back to top"
+
+"post.published" = "Published"
+"post.updated" = "Updated"
+"post.history" = "Changelog"
+"post.prev" = "Previous"
+"post.next" = "Next"
+"post.none" = "N/A"
+"post.words" = "Words"
+"post.readingTime" = "Reading time"
+"post.minutes" = "{{ . }} min"
+"post.related" = "Related posts"
+"post.share" = "Share this post"
+"post.wechatQr" = "WeChat share QR code"
+"post.copyLink" = "Copy link"
+"post.wechat" = "WeChat"
+"post.weibo" = "Weibo"
+"post.comment" = "Comments"
+"post.commentHint" = "Say something…"
+"post.commentFailed" = "Failed to load comments. Check your connection and refresh."
+"post.anchor" = "Link to this heading"
+
+"arch.category" = "Category"
+"arch.year" = "Year"
+"arch.month" = "Month"
+"arch.postsCount" = "{{ . }} posts"
+"arch.empty" = "No posts yet"
+"arch.emptyTags" = "No tags yet"
+"arch.uncategorized" = "Uncategorized"
+"tags.postsUnder" = 'Posts tagged "{tag}"'
+"link.prev" = "Previous"
+"link.next" = "Next"
+"link.category" = "Category"
+"link.pageInfo" = "Page 1 / {{ . }}"
+"link.currentCategory" = "Current category: {{ . }}"
+"link.empty" = "No links yet"
+"link.uncategorized" = "Uncategorized"
+
+"heatmap.title" = "Contribution Activity"
+"heatmap.months" = "January|February|March|April|May|June|July|August|September|October|November|December"
+"heatmap.year" = "{{ . }}"
+"heatmap.empty" = "No data"
+"heatmap.less" = "Less"
+"heatmap.more" = "More"
+
+"pager.prev" = "Previous"
+"pager.next" = "Next"
+"pager.total" = "{{ . }} pages in total"
+
+"footer.runtime" = "Blog running: %sd %sh %sm %ss"
+
+"a11y.skipToContent" = "Skip to main content"
+
+"notfound.title" = "Page not found"
+"notfound.text" = "The page you visited may have been removed or the address is incorrect."
+"notfound.back" = "Back to home"
+"notfound.latest" = "Or read the latest posts"

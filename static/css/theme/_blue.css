@@ -1,0 +1,27 @@
+/* 默认主题：行业标准亮暗（中性 · 高可读），颜色迁移自 blog-map themes/default.css */
+
+.blue.light {
+    --g-color:#2563eb;                      /* 标准蓝 */
+    --g-on-color:#ffffff;                   /* 主色上的文字（标准蓝深，压白字） */
+    --g-bg:#f5f6f8;                         /* 浅灰底 */
+    --glass-r:255;                          /* 玻璃底色 R（= 白面） */
+    --glass-g:255;                          /* 玻璃底色 G */
+    --glass-b:255;                          /* 玻璃底色 B */
+    --g-text:#1f2328;                       /* 近黑正文 */
+    --g-hover: #1d4ed8;                     /* 深蓝 hover */
+    --g-shadow: rgba(15, 20, 30, 0.12);     /* 中性阴影 */
+    --g-gradient: linear-gradient(90deg, #2563eb, #3b82f6, #60a5fa, #3b82f6, #2563eb);
+}
+
+.blue.dark {
+    --g-color:#3b82f6;                      /* 亮蓝 */
+    --g-on-color:#0d1117;                   /* 主色上的文字（暗色亮蓝偏白，压深字） */
+    --g-bg:#0d1117;                         /* 深灰底 */
+    --glass-r:23;                           /* 玻璃底色 R（= 深面，调亮） */
+    --glass-g:27;                           /* 玻璃底色 G */
+    --glass-b:33;                           /* 玻璃底色 B */
+    --g-text:#e6edf3;                       /* 浅灰文字 */
+    --g-hover: #60a5fa;                     /* 亮蓝 hover */
+    --g-shadow: rgba(0, 0, 0, 0.42);        /* 暗色阴影 */
+    --g-gradient: linear-gradient(90deg, #1d4ed8, #2563eb, #3b82f6, #2563eb, #1d4ed8);
+}

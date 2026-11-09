@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block main %}
+{% set postsSection = get_section(path="posts/_index.md") %}
+{% set posts = postsSection.pages %}
+{% set uncategorized = trans(key="arch.uncategorized") %}
+
+{# Tera v2 移除 concat 过滤器，改用列表推导去重 #}
+{% set categories = [post.extra?.category or uncategorized for post in posts] | unique | sort %}
+{% set years = [post.date | date(format="%Y") for post in posts] | unique | sort | reverse %}
+{% set months = [post.date | date(format="%Y-%m") for post in posts] | unique | sort | reverse %}
+
+<div class="archive-list">
+  <div class="tool-area">
+    <div class="view-tabs" role="tablist">
+      <button type="button" class="view-tab tab-on" data-view="category">{{ trans(key="arch.category") }}</button>
+      <button type="button" class="view-tab" data-view="year">{{ trans(key="arch.year") }}</button>
+      <button type="button" class="view-tab" data-view="month">{{ trans(key="arch.month") }}</button>
+    </div>
+  </div>
+
+  <div class="list-area">
+    <div class="arch-view view-on" data-view="category">
+      {% for c in categories %}
+      {% set_global groupCount = 0 %}
+      {% for post in posts %}
+        {% set pc = uncategorized %}
+        {% if post.extra?.category %}{% set pc = post.extra.category %}{% endif %}
+        {% if pc == c %}{% set_global groupCount = groupCount + 1 %}{% endif %}
+      {% endfor %}
+      <div class="arch-group">
+        <button type="button" class="group-header">
+          <span class="group-name">{{ c }}</span>
+          <span class="group-count">{{ trans(key="arch.postsCount") | replace(from="{{ . }}", to=groupCount | str) }}</span>
+          <span class="group-arrow">▾</span>
+        </button>
+        <div class="group-body">
+          <div class="group-list">
+            {% for post in posts %}
+            {% set pc = uncategorized %}
+            {% if post.extra?.category %}{% set pc = post.extra.category %}{% endif %}
+            {% if pc == c %}
+            <a class="group-item" href="{{ post.permalink }}">
+              <span class="item-title">{{ post.title }}</span>
+              {% if post.taxonomies?.tags %}
+              <span class="item-tags">
+                {% for t in post.taxonomies.tags %}{% if loop.index <= 2 %}<span class="item-tag">{{ t }}</span>{% endif %}{% endfor %}
+              </span>
+              {% endif %}
+              <span class="item-date">{{ post.date | date(format="%Y-%m-%d") }}</span>
+            </a>
+            {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="arch-view" data-view="year">
+      {% for y in years %}
+      {% set_global groupCount = 0 %}
+      {% for post in posts %}{% if post.date | date(format="%Y") == y %}{% set_global groupCount = groupCount + 1 %}{% endif %}{% endfor %}
+      <div class="arch-group">
+        <button type="button" class="group-header">
+          <span class="group-name">{{ y }}</span>
+          <span class="group-count">{{ trans(key="arch.postsCount") | replace(from="{{ . }}", to=groupCount | str) }}</span>
+          <span class="group-arrow">▾</span>
+        </button>
+        <div class="group-body">
+          <div class="group-list">
+            {% for post in posts %}
+            {% if post.date | date(format="%Y") == y %}
+            <a class="group-item" href="{{ post.permalink }}">
+              <span class="item-title">{{ post.title }}</span>
+              {% if post.taxonomies?.tags %}
+              <span class="item-tags">
+                {% for t in post.taxonomies.tags %}{% if loop.index <= 2 %}<span class="item-tag">{{ t }}</span>{% endif %}{% endfor %}
+              </span>
+              {% endif %}
+              <span class="item-date">{{ post.date | date(format="%Y-%m-%d") }}</span>
+            </a>
+            {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="arch-view" data-view="month">
+      {% for m in months %}
+      {% set_global groupCount = 0 %}
+      {% for post in posts %}{% if post.date | date(format="%Y-%m") == m %}{% set_global groupCount = groupCount + 1 %}{% endif %}{% endfor %}
+      <div class="arch-group">
+        <button type="button" class="group-header">
+          <span class="group-name">{{ m }}</span>
+          <span class="group-count">{{ trans(key="arch.postsCount") | replace(from="{{ . }}", to=groupCount | str) }}</span>
+          <span class="group-arrow">▾</span>
+        </button>
+        <div class="group-body">
+          <div class="group-list">
+            {% for post in posts %}
+            {% if post.date | date(format="%Y-%m") == m %}
+            <a class="group-item" href="{{ post.permalink }}">
+              <span class="item-title">{{ post.title }}</span>
+              {% if post.taxonomies?.tags %}
+              <span class="item-tags">
+                {% for t in post.taxonomies.tags %}{% if loop.index <= 2 %}<span class="item-tag">{{ t }}</span>{% endif %}{% endfor %}
+              </span>
+              {% endif %}
+              <span class="item-date">{{ post.date | date(format="%Y-%m-%d") }}</span>
+            </a>
+            {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    {% if posts | length == 0 %}
+    <div class="arch-empty">{{ trans(key="arch.empty") }}</div>
+    {% endif %}
+  </div>
+</div>
+{% endblock main %}

@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block main %}
+<div class="post-list">
+  <div class="list-area">
+    <div class="card-grid">
+      {% for post in paginator.pages %}
+      <a class="post-card" href="{{ post.permalink }}">
+        {% if post.extra?.category %}
+        <span class="post-card-category">{{ post.extra.category }}</span>
+        {% endif %}
+        <h2 class="post-card-title">{{ post.title }}</h2>
+        {% set excerpt = (post.description or post.summary or "") | striptags | truncate(length=80) %}
+        {% if excerpt %}<p class="post-card-excerpt">{{ excerpt }}</p>{% endif %}
+        <div class="post-card-meta">
+          {% if post.taxonomies?.tags %}
+          <div class="post-card-tags">
+            <span class="post-card-tag">{{ post.taxonomies.tags[0] }}</span>
+          </div>
+          {% endif %}
+          <time class="post-card-date" datetime="{{ post.date | date(format='%Y-%m-%d') }}">{{ post.date | date(format='%Y-%m-%d') }}</time>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+
+  {# Zola 的 current_index 本身从 1 开始，不能再加一 #}
+  {% set current = paginator.current_index %}
+  {% set total = paginator.number_pagers %}
+  <div class="btn-area">
+    <div class="pager-nav">
+      {% if paginator.previous %}
+      <a class="page-side" href="{{ paginator.previous | safe }}">{{ trans(key="pager.prev") }}</a>
+      {% else %}
+      <span class="page-side page-disabled">{{ trans(key="pager.prev") }}</span>
+      {% endif %}
+
+      {% set start = current - 2 %}
+      {% if start < 1 %}{% set start = 1 %}{% endif %}
+      {% set end = start + 4 %}
+      {% if end > total %}{% set end = total %}{% endif %}
+      {% if end - start < 4 %}{% set start = end - 4 %}{% endif %}
+      {% if start < 1 %}{% set start = 1 %}{% endif %}
+
+      {% for n in range(start=start, end=end + 1) %}
+      {% set pagerUrl = paginator.first %}
+      {% if n > 1 %}
+        {% if not pagerUrl is ending_with(pat="/") %}{% set pagerUrl = pagerUrl ~ "/" %}{% endif %}
+        {% set pagerUrl = pagerUrl ~ "page/" ~ n ~ "/" %}
+      {% endif %}
+      <a class="page-num{% if n == current %} page-on{% endif %}" href="{{ pagerUrl }}">{{ n }}</a>
+      {% endfor %}
+
+      {% if paginator.next %}
+      <a class="page-side" href="{{ paginator.next | safe }}">{{ trans(key="pager.next") }}</a>
+      {% else %}
+      <span class="page-side page-disabled">{{ trans(key="pager.next") }}</span>
+      {% endif %}
+    </div>
+    <div class="pager-info">{{ trans(key="pager.total") | replace(from="{{ . }}", to=total | str) }}</div>
+  </div>
+</div>
+{% endblock main %}

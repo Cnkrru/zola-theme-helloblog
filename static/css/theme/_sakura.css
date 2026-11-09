@@ -1,0 +1,27 @@
+/* 风格方案 B：樱粉（粉色基调 / 梦幻渐变），默认主题 */
+
+.sakura.light {
+  --g-color: #e8758f;                     /* 樱粉主色 */
+  --g-on-color: #1a0f2e;                  /* 主色上的文字（樱粉亮，压深字） */
+  --g-bg: #fdeef3;                        /* 樱雾底 */
+  --glass-r: 255;                         /* 玻璃底色 R */
+  --glass-g: 250;                         /* 玻璃底色 G */
+  --glass-b: 252;                         /* 玻璃底色 B */
+  --g-text: #4a3a40;                      /* 淡墨粉褐 */
+  --g-hover: #d65f7c;                     /* 深樱 */
+  --g-shadow: rgba(199, 115, 145, 0.16);  /* 暖粉阴影 */
+  --g-gradient: linear-gradient(90deg, #f9c5d1, #f7a8c0, #c9a0e0, #f7a8c0, #f9c5d1);
+}
+
+.sakura.dark {
+  --g-color: #e58fb0;                     /* 夜樱粉 */
+  --g-on-color: #1a0f2e;                  /* 主色上的文字（夜樱粉亮，压深字） */
+  --g-bg: #1a0f2e;                        /* 夜樱深紫 */
+  --glass-r: 37;                          /* 玻璃底色 R */
+  --glass-g: 22;                          /* 玻璃底色 G */
+  --glass-b: 56;                          /* 玻璃底色 B */
+  --g-text: #f3e8f0;                      /* 淡粉白 */
+  --g-hover: #e58fb0;                     /* 夜樱粉 */
+  --g-shadow: rgba(0, 0, 0, 0.32);        /* 暗色阴影 */
+  --g-gradient: linear-gradient(90deg, #d56b9a, #9a6cc9, #c77fd0, #9a6cc9, #d56b9a);
+}

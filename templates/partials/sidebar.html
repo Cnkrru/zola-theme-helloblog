@@ -1,0 +1,51 @@
+{# 侧栏区：头像 / 一句话 / 天气 / 导航 #}
+<aside class="sidebar">
+  <div class="avator">
+    <img src="{{ get_url(path=config.extra.avatar | default(value='avator.webp')) }}" alt="{{ trans(key='sidebar.avatarAlt') }}" loading="lazy" title="{{ trans(key='sidebar.avatar') }}" />
+  </div>
+
+  <div class="saying">{% if config.extra.saying %}{{ config.extra.saying }}{% else %}{{ trans(key='sidebar.saying') }}{% endif %}</div>
+
+  <div class="weather-ip" data-unknown="{{ trans(key='sidebar.unknown') }}">
+    <span class="weather-number weather-skeleton weather-skeleton-temp"></span>
+    <span class="ip weather-skeleton weather-skeleton-city"></span>
+  </div>
+
+  <nav class="nav">
+    {% for item in config.extra.menu %}
+    {% set href = get_url(path=item.path, lang=lang) %}
+    {% if not href is ending_with(pat="/") %}{% set href = href ~ "/" %}{% endif %}
+    {% set active = current_url is starting_with(pat=href) %}
+    <a class="nav-element" href="{{ href }}"{% if active %} aria-current="page"{% endif %}>{{ trans(key=item.key) | default(value=item.name) }}</a>
+    {% endfor %}
+  </nav>
+
+  <button class="bsz-btn" type="button">{{ trans(key='sidebar.stats') }}</button>
+
+  <dialog class="bsz-box">
+    <div class="bsz-header">
+      <p>{{ trans(key='sidebar.siteStats') }}</p>
+      <button class="bsz-close" type="button" aria-label="{{ trans(key='sidebar.statsClose') }}" title="{{ trans(key='sidebar.statsClose') }}">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+      </button>
+    </div>
+
+    <div class="bsz-body">
+      <div class="bsz-item"><span class="bsz-label">{{ trans(key='sidebar.todayPv') }}</span><span class="bsz-num" id="busuanzi_today_pv">…</span></div>
+      <div class="bsz-item"><span class="bsz-label">{{ trans(key='sidebar.todayUv') }}</span><span class="bsz-num" id="busuanzi_today_uv">…</span></div>
+      <div class="bsz-item"><span class="bsz-label">{{ trans(key='sidebar.sitePv') }}</span><span class="bsz-num" id="busuanzi_site_pv">…</span></div>
+      <div class="bsz-item"><span class="bsz-label">{{ trans(key='sidebar.siteUv') }}</span><span class="bsz-num" id="busuanzi_site_uv">…</span></div>
+      <div class="bsz-item"><span class="bsz-label">{{ trans(key='sidebar.pagePv') }}</span><span class="bsz-num" id="busuanzi_page_pv">…</span></div>
+      <div class="bsz-item"><span class="bsz-label">{{ trans(key='sidebar.pageUv') }}</span><span class="bsz-num" id="busuanzi_page_uv">…</span></div>
+    </div>
+
+    <div class="bsz-footer">
+      <p>Power by</p>
+      <a href="https://www.busuanzi.cc/">{{ trans(key='sidebar.busuanzi') }}</a>
+    </div>
+  </dialog>
+</aside>
+<div class="sidebar-overlay"></div>

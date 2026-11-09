@@ -1,0 +1,753 @@
+/* ====================<页头>==================== */
+
+/* ---------- logo ---------- */
+.header .logo {
+  width: fit-content;
+  height: 100%;
+
+  margin-left: var(--space-md);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.header .logo p {
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: -0.3px;
+  white-space: nowrap;
+  transition: opacity 0.2s ease;
+  color: var(--g-color);
+}
+
+.header .logo p:hover {
+  opacity: 0.8;
+}
+
+/* ---------- 搜索框（结果下拉随搜索功能一起做） ---------- */
+.search {
+  width: 600px;
+  height: 80%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-sm);
+
+  padding: 0 var(--space-md);
+  border-radius: var(--radius-full);
+  border: var(--border-width) solid color-mix(in srgb, var(--g-color) 15%, transparent);
+
+  background-color: rgba(
+    var(--glass-r),
+    var(--glass-g),
+    var(--glass-b),
+    calc(var(--glass-opacity) * 0.6)
+  );
+  backdrop-filter: blur(12px);
+
+  transition: border-color 0.2s ease;
+}
+
+.search:focus-within {
+  border-color: var(--g-color);
+}
+
+.search-icon {
+  color: var(--g-text);
+  opacity: 0.5;
+  transition: opacity 0.2s ease;
+}
+
+.search:focus-within .search-icon {
+  opacity: 0.8;
+}
+
+.search input {
+  width: 100%;
+  height: 100%;
+
+  color: var(--g-text);
+  background: transparent;
+}
+
+.search input::placeholder {
+  color: var(--g-text);
+  opacity: 0.4;
+}
+
+/* ---------- 功能按钮 ---------- */
+.button-list {
+  width: fit-content;
+  height: 80%;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.h-button {
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: var(--radius-full);
+  background-color: var(--g-color);
+  border: var(--border-width) solid var(--g-color);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--g-color) 30%, transparent);
+
+  transition:
+    transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.h-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--g-color) 40%, transparent);
+}
+
+.h-button .icon {
+  color: #fff;
+}
+
+/* 明暗图标跟随当前主题：亮色太阳、暗色月亮（body 默认带 dark） */
+.ld-btn .icon-sun {
+  display: none;
+}
+
+body.light .ld-btn .icon-sun {
+  display: block;
+}
+
+body.light .ld-btn .icon-moon {
+  display: none;
+}
+
+/* 汉堡键：桌面隐藏，仅移动端显示 */
+.menu-btn {
+  display: none;
+}
+
+/* ---------- 语言菜单 ---------- */
+.locale-wrap {
+  position: relative;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.locale-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 10000;
+
+  width: 168px;
+  margin: 0;
+  padding: 4px;
+  list-style: none;
+
+  border-radius: var(--radius-md);
+  border: var(--border-width) solid color-mix(in srgb, var(--g-color) 16%, transparent);
+  background: rgba(var(--glass-r), var(--glass-g), var(--glass-b), var(--glass-opacity));
+  backdrop-filter: blur(20px) saturate(180%);
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.08),
+    0 8px 24px rgba(0, 0, 0, 0.14);
+
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-4px);
+  pointer-events: none;
+  transition:
+    opacity 0.15s ease,
+    transform 0.15s ease,
+    visibility 0.15s ease;
+}
+
+.locale-menu.open {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  pointer-events: auto;
+}
+
+.locale-item {
+  width: 100%;
+  height: 38px;
+  padding: 0 10px;
+  box-sizing: border-box;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-sm);
+
+  border-radius: var(--radius-sm);
+  background: transparent;
+
+  font-size: 14px;
+  line-height: 1;
+  text-align: left;
+  text-decoration: none;
+  color: var(--g-text);
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.locale-item:hover {
+  background: color-mix(in srgb, var(--g-color) 14%, transparent);
+}
+
+.locale-item:focus-visible {
+  outline: 2px solid var(--g-color);
+  outline-offset: -2px;
+  background: color-mix(in srgb, var(--g-color) 14%, transparent);
+}
+
+.locale-item.on {
+  color: var(--g-color);
+  font-weight: 600;
+}
+
+.locale-check {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+/* ====================<响应式>==================== */
+
+@media (max-width: 768px) {
+  /* [响应式-sm] 手机 */
+  .header .logo {
+    margin-left: var(--space-sm);
+  }
+  .header .logo p {
+    font-size: 22px;
+  }
+
+  .search {
+    width: 60%;
+    max-width: 480px;
+    height: 44px;
+  }
+
+  .menu-btn {
+    display: flex;
+  }
+  .immersive-btn {
+    display: none;
+  }
+  .h-button {
+    width: 38px;
+    height: 38px;
+  }
+}
+
+@media (max-width: 480px) {
+  /* [响应式-xs] 窄屏 */
+  .header {
+    gap: var(--space-xs);
+    padding: var(--space-xs);
+  }
+  .header .logo {
+    margin-left: 0;
+  }
+  .header .logo p {
+    font-size: 18px;
+  }
+
+  /* 搜索框改为可收缩：窄屏下优先保证页头不横向溢出 */
+  .search {
+    width: auto;
+    max-width: none;
+    height: 40px;
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: 0 var(--space-sm);
+  }
+  .search input {
+    min-width: 0;
+  }
+
+  .button-list {
+    flex-shrink: 0;
+    gap: 4px;
+  }
+  .h-button {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+/* ====================<音乐播放器>==================== */
+
+.music-player {
+  position: fixed;
+  top: 64px;
+  right: 20px;
+  z-index: 1000;
+  width: 320px;
+  max-width: calc(100vw - 32px);
+  padding: 14px;
+  border-radius: var(--space-lg);
+  border: var(--border-width) solid color-mix(in srgb, var(--g-color) 25%, transparent);
+  background: rgba(
+    var(--glass-r),
+    var(--glass-g),
+    var(--glass-b),
+    calc(var(--glass-opacity) * 0.9)
+  );
+  backdrop-filter: blur(20px) saturate(180%);
+  box-shadow: 0 8px 24px var(--g-shadow);
+  color: var(--g-text);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  pointer-events: none;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease,
+    visibility 0.2s ease;
+}
+
+.music-player.open {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  pointer-events: auto;
+}
+
+/* ---------- 头部：封面 + 信息 ---------- */
+.mp-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.mp-cover {
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+  border-radius: var(--space-md);
+  background-color: color-mix(in srgb, var(--g-color) 12%, transparent);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.mp-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mp-cover-fallback {
+  width: 26px;
+  height: 26px;
+  color: var(--g-color);
+}
+
+.mp-meta {
+  flex: 1;
+  min-width: 0;
+}
+
+.mp-title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mp-artist {
+  margin: 2px 0 0;
+  font-size: 12px;
+  opacity: 0.6;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mp-status {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: var(--g-color);
+}
+
+.mp-status-error {
+  color: var(--color-error);
+}
+
+.mp-close {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  border-radius: var(--radius-full);
+  background-color: transparent;
+  color: var(--g-text);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.mp-close:hover {
+  background-color: color-mix(in srgb, var(--g-color) 12%, transparent);
+}
+
+.mp-close-icon {
+  width: 16px;
+  height: 16px;
+}
+
+/* ---------- 控制条 ---------- */
+.mp-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+}
+
+.mp-btn {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  border-radius: var(--radius-full);
+  background-color: transparent;
+  color: var(--g-text);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.mp-btn:hover {
+  background-color: color-mix(in srgb, var(--g-color) 12%, transparent);
+}
+
+.mp-ctrl-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.mp-play {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  border-radius: var(--radius-full);
+  background-color: var(--g-color);
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--g-color) 30%, transparent);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.mp-play:hover {
+  transform: scale(1.08);
+}
+
+.mp-play-icon {
+  width: 22px;
+  height: 22px;
+}
+
+/* 播放/暂停、静音图标按状态切换 */
+.music-player .icon-pause,
+.music-player .icon-volume-x {
+  display: none;
+}
+
+.music-player.playing .icon-play {
+  display: none;
+}
+
+.music-player.playing .icon-pause {
+  display: block;
+}
+
+.music-player.muted .icon-volume {
+  display: none;
+}
+
+.music-player.muted .icon-volume-x {
+  display: block;
+}
+
+/* ---------- 进度 / 音量 ---------- */
+.mp-progress,
+.mp-volume {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mp-time {
+  font-size: 11px;
+  opacity: 0.6;
+  min-width: 32px;
+  text-align: center;
+}
+
+.mp-range {
+  flex: 1;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  border-radius: var(--radius-full);
+  background: color-mix(in srgb, var(--g-text) 18%, transparent);
+  outline: none;
+  cursor: pointer;
+}
+
+.mp-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: var(--radius-full);
+  background: var(--g-color);
+  border: none;
+}
+
+.mp-range:disabled::-webkit-slider-thumb {
+  opacity: 0.4;
+}
+
+/* ---------- 列表 ---------- */
+.mp-listhead {
+  border-top: var(--border-width) solid color-mix(in srgb, var(--g-color) 25%, transparent);
+  padding-top: 10px;
+}
+
+.mp-listtoggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border: none;
+  background-color: transparent;
+  color: var(--g-text);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 2px 4px;
+}
+
+.mp-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  /* 收起时折叠高度并淡出，和原版 drop 过渡一致 */
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(-6px);
+  pointer-events: none;
+  transition:
+    max-height 0.2s ease,
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.mp-list.open {
+  max-height: 200px;
+  overflow-y: auto;
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+.mp-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: var(--space-sm);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.mp-item:hover {
+  background-color: color-mix(in srgb, var(--g-color) 12%, transparent);
+}
+
+.mp-item.on {
+  background-color: color-mix(in srgb, var(--g-color) 20%, transparent);
+}
+
+.mp-item.on .mp-item-title {
+  color: var(--g-color);
+  font-weight: 600;
+}
+
+.mp-item-title {
+  font-size: 13px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mp-item-artist {
+  font-size: 11px;
+  opacity: 0.6;
+  flex-shrink: 0;
+}
+
+/* ====================<响应式>==================== */
+@media (max-width: 768px) {
+  /* [响应式-sm] 手机 */
+  .music-player {
+    right: 12px;
+    width: calc(100vw - 24px);
+  }
+}
+
+@media (max-width: 480px) {
+  /* [响应式-xs] 窄屏 */
+  .music-player {
+    left: 12px;
+    right: 12px;
+    width: auto;
+    padding: 12px;
+  }
+}
+
+/* ====================<搜索>==================== */
+
+/* 搜索框基础样式在 header.css，这里补像素级细节与结果下拉 */
+.search input {
+  outline: none;
+}
+
+.search-results {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10000;
+  max-height: 60vh;
+  overflow-y: auto;
+  border: var(--border-width) solid color-mix(in srgb, var(--g-color) 12%, transparent);
+  background: rgba(var(--glass-r), var(--glass-g), var(--glass-b), var(--glass-opacity));
+  backdrop-filter: blur(20px) saturate(180%);
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.06),
+    0 8px 24px rgba(0, 0, 0, 0.1);
+
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease,
+    visibility 0.2s ease;
+}
+
+.search-results.open {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+}
+
+.search-empty {
+  padding: 16px;
+  text-align: center;
+  color: var(--g-text);
+}
+
+.search-counter {
+  padding: 8px 16px;
+  font-size: 12px;
+  color: var(--g-text);
+  border-bottom: var(--border-width) solid color-mix(in srgb, var(--g-color) 25%, transparent);
+}
+
+.search-item {
+  display: block;
+  width: calc(100% - 12px);
+  padding: 12px 16px;
+  margin: 2px 6px;
+  border: none;
+  border-radius: var(--radius-md);
+  font: inherit;
+  text-align: left;
+  background: transparent;
+  cursor: pointer;
+  color: var(--g-text);
+  transition: background-color 0.15s ease;
+}
+
+.search-item:hover,
+.search-item:focus-visible {
+  background-color: color-mix(in srgb, var(--g-color) 15%, transparent);
+}
+
+.search-item:focus-visible {
+  outline: 2px solid var(--g-color);
+  outline-offset: -2px;
+}
+
+.search-item-title {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.search-item-meta {
+  display: block;
+  font-size: 13px;
+  opacity: 0.7;
+}
+
+.search-item-date {
+  margin-left: 8px;
+}
+
+.search-item-tags {
+  display: block;
+  font-size: 12px;
+  margin-top: 6px;
+}
+
+.search-hit {
+  color: var(--g-color);
+}
+
+.search-tag {
+  display: inline-block;
+  margin-right: 4px;
+  padding: 2px 6px;
+  font-size: 11px;
+  border-radius: var(--radius-sm);
+  background-color: color-mix(in srgb, var(--g-color) 25%, transparent);
+  color: var(--g-text);
+}

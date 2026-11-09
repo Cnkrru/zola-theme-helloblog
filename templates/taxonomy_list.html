@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block main %}
+{% set postsSection = get_section(path="posts/_index.md") %}
+{% set posts = postsSection.pages %}
+<div class="tag-list" data-title="{{ trans(key='tags.postsUnder') }}">
+  {% if terms | length > 0 %}
+  <div class="cloud-area">
+    {% for term in terms %}
+    <button class="cloud-tag" type="button" data-tag="{{ term.name }}">{{ term.name }}</button>
+    {% endfor %}
+  </div>
+
+  <div class="timeline-area" hidden>
+    <div class="tl-bar">
+      <span class="tl-title"></span>
+    </div>
+    <div class="tl-body">
+      {% for post in posts %}
+      {% set postTags = post.taxonomies.tags | default(value=[]) %}
+      <a class="tl-item" href="{{ post.permalink }}" data-tags='{{ postTags | json_encode | safe }}' hidden>
+        <span class="tl-dot"></span>
+        <span class="tl-item-title">{{ post.title }}</span>
+        <span class="tl-item-date">{{ post.date | date(format="%Y-%m-%d") }}</span>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+  {% else %}
+  <div class="arch-empty">{{ trans(key="arch.emptyTags") }}</div>
+  {% endif %}
+</div>
+{% endblock main %}

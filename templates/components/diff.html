@@ -1,0 +1,21 @@
+{%- component diff() -%}
+{%- set_global rows = "" -%}
+{%- for line in body | trim | split(pat="\n") -%}
+{%- set cls = "diff-ctx" -%}
+{%- if line is starting_with(pat="--- ") or line is starting_with(pat="+++ ") -%}
+{%- set cls = "diff-file" -%}
+{%- elif line is starting_with(pat="@@") -%}
+{%- set cls = "diff-hunk" -%}
+{%- elif line is starting_with(pat="+") -%}
+{%- set cls = "diff-add" -%}
+{%- elif line is starting_with(pat="-") -%}
+{%- set cls = "diff-del" -%}
+{%- else -%}
+{%- for p in ["diff --git ", "index ", "new file mode ", "deleted file mode ", "old mode ", "new mode ", "similarity index ", "dissimilarity index ", "rename from ", "rename to ", "copy from ", "copy to ", "Binary files ", "GIT binary patch", "\\ No newline at end of file"] -%}
+{%- if line is starting_with(pat=p) -%}{%- set cls = "diff-meta" -%}{%- endif -%}
+{%- endfor -%}
+{%- endif -%}
+{%- set_global rows = rows ~ "<span class=\"diff-line " ~ cls ~ "\">" ~ (line | escape) ~ "</span>" -%}
+{%- endfor -%}
+<div class="highlight language-diff"><pre class="diff"><code>{{ rows | safe }}</code></pre></div>
+{%- endcomponent diff -%}

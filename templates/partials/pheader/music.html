@@ -1,0 +1,95 @@
+{% set music = load_data(path="data/music.json") %}
+{% if lang == "en" %}{% set music = load_data(path="data/music-en.json") %}{% endif %}
+<div class="music-player" id="music-player">
+  <div class="mp-head">
+    <div class="mp-cover">
+      <img class="mp-cover-img" alt="{{ trans(key='music.cover') }}" hidden>
+      <svg class="mp-cover-fallback icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 18V5l12-2v13" />
+        <circle cx="6" cy="18" r="3" />
+        <circle cx="18" cy="16" r="3" />
+      </svg>
+    </div>
+    <div class="mp-meta">
+      <h4 class="mp-title">{{ trans(key='music.emptyTitle') }}</h4>
+      <p class="mp-artist">{{ trans(key='music.emptyArtist') }}</p>
+      <p class="mp-status" hidden></p>
+    </div>
+    <button class="mp-close" type="button" title="{{ trans(key='music.close') }}">
+      <svg class="mp-close-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18" />
+        <line x1="6" y1="6" x2="18" y2="18" />
+      </svg>
+    </button>
+  </div>
+
+  <div class="mp-controls">
+    <button class="mp-btn mp-prev" type="button" title="{{ trans(key='music.prev') }}">
+      <svg class="mp-ctrl-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="19 20 9 12 19 4 19 20" />
+        <line x1="5" y1="19" x2="5" y2="5" />
+      </svg>
+    </button>
+    <button class="mp-play" type="button" title="{{ trans(key='music.play') }}">
+      <svg class="mp-play-icon icon-play" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="5 3 19 12 5 21 5 3" />
+      </svg>
+      <svg class="mp-play-icon icon-pause" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="6" y="4" width="4" height="16" />
+        <rect x="14" y="4" width="4" height="16" />
+      </svg>
+    </button>
+    <button class="mp-btn mp-next" type="button" title="{{ trans(key='music.next') }}">
+      <svg class="mp-ctrl-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="5 4 15 12 5 20 5 4" />
+        <line x1="19" y1="5" x2="19" y2="19" />
+      </svg>
+    </button>
+  </div>
+
+  <div class="mp-progress">
+    <span class="mp-time mp-current-time">0:00</span>
+    <input class="mp-range mp-seek" type="range" min="0" max="100" step="0.1" value="0" disabled>
+    <span class="mp-time mp-duration">0:00</span>
+  </div>
+
+  <div class="mp-volume">
+    <button class="mp-btn mp-mute" type="button" title="{{ trans(key='music.mute') }}">
+      <svg class="mp-ctrl-icon icon-volume" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+        <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+        <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
+      </svg>
+      <svg class="mp-ctrl-icon icon-volume-x" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+        <line x1="23" y1="9" x2="17" y2="15" />
+        <line x1="17" y1="9" x2="23" y2="15" />
+      </svg>
+    </button>
+    <input class="mp-range mp-volume-range" type="range" min="0" max="1" step="0.05" value="1">
+  </div>
+
+  <div class="mp-listhead">
+    <button class="mp-listtoggle" type="button">
+      <svg class="mp-ctrl-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="8" y1="6" x2="21" y2="6" />
+        <line x1="8" y1="12" x2="21" y2="12" />
+        <line x1="8" y1="18" x2="21" y2="18" />
+        <line x1="3" y1="6" x2="3.01" y2="6" />
+        <line x1="3" y1="12" x2="3.01" y2="12" />
+        <line x1="3" y1="18" x2="3.01" y2="18" />
+      </svg>
+      <span>{{ trans(key='music.list') | replace(from="{{ . }}", to=music.songs | length | str) }}</span>
+    </button>
+  </div>
+
+  <ul class="mp-list">
+    {% for song in music.songs %}
+    <li class="mp-item" data-index="{{ loop.index0 }}">
+      <span class="mp-item-title">{{ song.title }}</span>
+      <span class="mp-item-artist">{{ song.artist }}</span>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+<script type="application/json" id="music-data">{{ music | json_encode | safe }}</script>

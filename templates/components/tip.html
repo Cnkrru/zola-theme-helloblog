@@ -1,0 +1,3 @@
+{%- component tip(@lang, title: string = "") -%}
+{% <admonition level="tip" title={title} lang={lang | default(value="zh")}> %}{{ body | safe }}{% </admonition> %}
+{%- endcomponent tip -%}

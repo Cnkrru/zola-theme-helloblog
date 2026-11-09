@@ -1,0 +1,92 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="Zola">
+
+{% set siteTitle = config.title %}
+{% set isHome = false %}
+{% if current_path is defined %}
+  {% if current_path == "/" or current_path == "/" ~ lang ~ "/" %}{% set isHome = true %}{% endif %}
+{% endif %}
+{% set pageTitle = "" %}
+{% if page is defined and page.title %}{% set pageTitle = page.title %}{% elif section is defined and section.title %}{% set pageTitle = section.title %}{% endif %}
+<title>{% if isHome or not pageTitle %}{{ siteTitle }}{% else %}{{ pageTitle }} | {{ siteTitle }}{% endif %}</title>
+
+{% set desc = "" %}
+{% if page is defined and page.description %}{% set desc = page.description %}{% elif section is defined and section.description %}{% set desc = section.description %}{% endif %}
+{% set desc = desc | default(value=config.description) %}
+{% if desc %}<meta name="description" content="{{ desc }}">{% endif %}
+
+{% set kw = config.extra?.keywords | default(value=[]) %}
+{% if page is defined and page.extra?.keywords %}{% set kw = page.extra.keywords %}{% elif section is defined and section.extra?.keywords %}{% set kw = section.extra.keywords %}{% endif %}
+{% if kw | length > 0 %}<meta name="keywords" content="{{ kw | join(sep=', ') }}">{% endif %}
+
+<meta name="robots" content="index,follow">
+{% if current_url is defined %}<link rel="canonical" href="{{ current_url }}">{% endif %}
+
+{% set translations = [] %}
+{% if page is defined and page.translations is defined %}{% set translations = page.translations %}
+{% elif section is defined and section.translations is defined %}{% set translations = section.translations %}{% endif %}
+{% for t in translations %}
+<link rel="alternate" hreflang="{{ t.lang }}" href="{{ t.permalink }}">
+{% endfor %}
+
+<link rel="alternate" type="application/atom+xml" title="{{ config.title }}" href="{{ get_url(path='atom.xml', lang=lang) }}">
+
+{% if paginator is defined %}
+{% if paginator.previous %}<link rel="prev" href="{{ paginator.previous | safe }}">{% endif %}
+{% if paginator.next %}<link rel="next" href="{{ paginator.next | safe }}">{% endif %}
+{% endif %}
+
+<link rel="icon" href="{{ get_url(path='favicon.ico') }}">
+
+{% set ogImage = config.extra.images | default(value=[]) %}
+{# Zola 的 Page 没有 section 字段，文章归属用 components 首段判断 #}
+{% set isPost = false %}
+{% if page is defined and page.components is defined and page.components | length > 0 and page.components[0] == 'posts' %}{% set isPost = true %}{% endif %}
+<meta property="og:type" content="{% if isPost %}article{% else %}website{% endif %}">
+<meta property="og:title" content="{% if isHome or not pageTitle %}{{ siteTitle }}{% else %}{{ pageTitle }}{% endif %}">
+{% if desc %}<meta property="og:description" content="{{ desc }}">{% endif %}
+{% if current_url is defined %}<meta property="og:url" content="{{ current_url }}">{% endif %}
+<meta property="og:site_name" content="{{ siteTitle }}">
+{% if ogImage | length > 0 %}<meta property="og:image" content="{{ get_url(path=ogImage[0]) }}">{% endif %}
+{% if isPost %}
+<meta property="article:published_time" content="{{ page.date | date(format='%Y-%m-%dT%H:%M:%SZ') }}">
+{% if page.updated %}<meta property="article:modified_time" content="{{ page.updated | date(format='%Y-%m-%dT%H:%M:%SZ') }}">{% endif %}
+{% endif %}
+<meta name="twitter:card" content="{% if ogImage | length > 0 %}summary_large_image{% else %}summary{% endif %}">
+<meta name="twitter:title" content="{% if isHome or not pageTitle %}{{ siteTitle }}{% else %}{{ pageTitle }}{% endif %}">
+{% if desc %}<meta name="twitter:description" content="{{ desc }}">{% endif %}
+{% if ogImage | length > 0 %}<meta name="twitter:image" content="{{ get_url(path=ogImage[0]) }}">{% endif %}
+
+{% if isPost %}
+<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": {{ page.title | json_encode | safe }},
+  "datePublished": {{ page.date | date(format='%Y-%m-%dT%H:%M:%SZ') | json_encode | safe }},
+  {% if page.updated %}"dateModified": {{ page.updated | date(format='%Y-%m-%dT%H:%M:%SZ') | json_encode | safe }},{% endif %}
+  "url": {{ page.permalink | json_encode | safe }},
+  "mainEntityOfPage": {{ page.permalink | json_encode | safe }},
+  {% if desc %}"description": {{ desc | json_encode | safe }},{% endif %}
+  "author": { "@type": "Person", "name": {{ config.author | default(value=siteTitle) | json_encode | safe }} },
+  "publisher": { "@type": "Organization", "name": {{ siteTitle | json_encode | safe }} }
+}</script>
+{% endif %}
+
+{% include "partials/css.html" %}
+<style>
+  :root { --glass-opacity: {{ config.extra.glass_opacity | default(value=0.5) }}; }
+  {% if config.extra.background?.enable %}
+  :root { --bg-overlay-dark: {{ config.extra.background.overlay_dark }}; --bg-overlay-light: {{ config.extra.background.overlay_light }}; }
+  body.bg-img { background: url('{{ get_url(path=config.extra.background.image) }}') center/cover no-repeat; }
+  body::before { content: ""; position: fixed; inset: 0; background: rgba(0, 0, 0, var(--bg-overlay-dark)); pointer-events: none; z-index: -1; }
+  body.light::before { background: rgba(255, 255, 255, var(--bg-overlay-light)); }
+  {% endif %}
+  /* Zola giallo 语法高亮行容器 */
+  .giallo-l { display: inline-block; min-height: 1lh; width: 100%; }
+  .giallo-ln { display: inline-block; user-select: none; margin-right: 0.4em; padding: 0.4em; min-width: 3ch; text-align: right; opacity: 0.8; }
+</style>
+
+<meta name="search-script" content="{{ get_url(path='js/pamin/search.js') }}?v={{ get_hash(path='js/pamin/search.js', sha_type=256, base64=false) }}">
+<meta name="music-script" content="{{ get_url(path='js/pamin/music.js') }}?v={{ get_hash(path='js/pamin/music.js', sha_type=256, base64=false) }}">
+<script type="module" src="{{ get_url(path='js/main.js') }}?v={{ get_hash(path='js/main.js', sha_type=256, base64=false) }}"></script>

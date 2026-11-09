@@ -1,0 +1,11 @@
+{%- component qa() -%}
+<div class="qa">
+{%- for line in body | split(pat="\n") -%}
+{%- set t = line | trim -%}
+{%- if t -%}
+{%- set fields = t | split(pat="|") -%}
+<details class="qa-item"><summary class="qa-q"><span class="qa-badge">Q</span>{{ fields | nth(n=0) | trim }}</summary><div class="qa-a"><span class="qa-badge qa-badge-a">A</span>{% if fields | length > 1 %}{{ fields | nth(n=1) | trim }}{% endif %}</div></details>
+{%- endif -%}
+{%- endfor -%}
+</div>
+{%- endcomponent qa -%}
