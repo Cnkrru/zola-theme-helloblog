@@ -2,7 +2,7 @@
 
 English | [简体中文](README.zh-CN.md)
 
-![helloblog theme preview: light and dark modes](images/screenshot.png)
+![helloblog theme preview: light and dark modes](screenshot.png)
 
 A glassmorphism personal blog theme for Zola — bilingual content, light/dark modes, local search, and a rich set of Markdown writing components.
 

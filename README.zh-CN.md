@@ -2,7 +2,7 @@
 
 [English](README.md) | 简体中文
 
-![helloblog 主题预览：亮色与暗色模式](images/screenshot.png)
+![helloblog 主题预览：亮色与暗色模式](screenshot.png)
 
 一个玻璃拟态风格的 Zola 个人博客主题，支持中英双语、明暗主题、本地搜索，以及一整套 Markdown 写作组件。
 
